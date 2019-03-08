@@ -1,0 +1,19 @@
+{
+  "name": "dgsin1819-03",
+  "version": "0.1.0",
+  "description": "Trabajo del grupo 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mii-dgsin/DGSIN1819-03.git"
+  },
+  "author": "José Luis García Mora, Roberto Mantas Nakhai y Jesús Díaz Cabello",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mii-dgsin/DGSIN1819-03/issues"
+  },
+  "homepage": "https://github.com/mii-dgsin/DGSIN1819-03#readme"
+}
