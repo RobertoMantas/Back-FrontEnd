@@ -1,5 +1,5 @@
-// Get rid of _id when returning contacts
-function formatContacts (governments) {
+// Get rid of _id when returning governments
+function formatGovernments (governments) {
   return governments.map((g) => {
       delete g._id // removes the property
       return g;
@@ -67,7 +67,7 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
           console.error('WARNING: Error getting data from DB');
           response.sendStatus(500); // internal server error
         } else {
-          var formattedContacts = formatContacts(governments);
+          var formatGovernments = formatContacts(governments);
           console.log("INFO: Sending governments: " + JSON.stringify(governments, 2, null));
           response.send(governments);
         }
