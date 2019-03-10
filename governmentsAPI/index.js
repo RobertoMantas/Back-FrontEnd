@@ -247,6 +247,60 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
 
 
 
+    //DELETE over a collection
+app.delete(BASE_API_PATH + "/governments", function (request, response) {
+  console.log("INFO: New DELETE request to /governments");
+  if(apiKeyCheck(request,response)==true){
+  dbRoberto.remove({}, {multi: true}, function (err, result) {
+      var numRemoved = JSON.parse(result);
+      if (err) {
+          console.error('WARNING: Error removing data from DB');
+          response.sendStatus(500); // internal server error
+      } else {
+          if (numRemoved.n > 0) {
+              console.log("INFO: All the governments (" + numRemoved.n + ") have been succesfully deleted, sending 204...");
+              response.sendStatus(204); // no content
+          } else {
+              console.log("WARNING: There are no governments to delete");
+              response.sendStatus(404); // not found
+          }
+      }
+  });
+  }
+});
+
+
+//DELETE over a single resource
+app.delete(BASE_API_PATH + "/governments/:country/:year", function (request, response) {
+  var country = request.params.country;
+  var year = request.params.year;
+  
+  if(apiKeyCheck(request,response)==true){
+  if (!country || !year) {
+      console.log("WARNING: New DELETE request to /governments/:country/:year without country or year, sending 400...");
+      response.sendStatus(400); // bad request
+  } else {
+      console.log("INFO: New DELETE request to /governments/" + country + " and year " + year);
+      dbRoberto.remove({country:country, $and:[{"year":year}]}, {}, function (err, result) {
+      var numRemoved = JSON.parse(result);   
+          if (err) {
+              console.error('WARNING: Error removing data from DB');
+              response.sendStatus(500); // internal server error
+          } else {
+              console.log("INFO: governments removed: " + numRemoved.n);
+              if (numRemoved.n === 1) {
+                  console.log("INFO: The salary with country " + country + " and year " + year + " has been succesfully deleted, sending 204...");
+                  response.sendStatus(204); //no content
+              } else {
+                  console.log("WARNING: There are no countries to delete");
+                  response.sendStatus(404); // not found
+              }
+          }
+      });
+  }
+  }
+});
+
 
 
 };
