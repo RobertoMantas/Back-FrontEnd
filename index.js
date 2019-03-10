@@ -21,8 +21,8 @@ familiesAPI.register(app);
 freedomsAPI.register(app);
 
 
-app.get("/docs", (req, res) => {
-  res.redirect("https://documenter.getpostman.com/view/5455766/S11NMcFj");
+app.get("/docsroberto", (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/1779152/S11RJvKA");
 });
 
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -60,13 +60,13 @@ var initialgovernment = [{
   "confidence": 7.42
 }, {
   "country": "Spain",
-  "year": "2016",
+  "year": "2017",
   "trustGovernment": 0.06,
   "generosity": 0.17,
   "confidence": 6.28
 }, {
   "country": "Portugal",
-  "year": "2016",
+  "year": "2015",
   "trustGovernment": 0.01,
   "generosity": 0.11,
   "confidence": 5.03
@@ -94,7 +94,7 @@ MongoClient.connect(mdbURLRoberto, (err, client) => {
 
     governmentsAPI.register(app, dbRoberto, BASE_API_PATH, apiKeyCheck);
 
-    app.listen(process.env.PORT || 8088, () => {
+    app.listen(process.env.PORT || 8089, () => {
       console.log("Server ready");
     }).on("error", (e) => {
       console.error("Server NOT ready!");

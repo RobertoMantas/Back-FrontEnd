@@ -58,7 +58,7 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
       }
     });
   });
-
+//GET COLLECTION
   app.get(BASE_API_PATH + "/governments", function (request, response) {
     console.log("INFO: New GET request to /governments");
     if (apiKeyCheck(request, response) == true) {
@@ -233,7 +233,7 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
                     response.sendStatus(500); // internal server error
                 } else if (provinces.length > 0) {
                         dbRoberto.update({country: country, year: year}, updatedStat);
-                        console.log("INFO: Modifying salary with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
+                        console.log("INFO: Modifying government with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
                         response.send(updatedStat); // return the updated contact
                     } else {
                         console.log("WARNING: There are not any result with province " + country);
@@ -289,7 +289,7 @@ app.delete(BASE_API_PATH + "/governments/:country/:year", function (request, res
           } else {
               console.log("INFO: governments removed: " + numRemoved.n);
               if (numRemoved.n === 1) {
-                  console.log("INFO: The salary with country " + country + " and year " + year + " has been succesfully deleted, sending 204...");
+                  console.log("INFO: The government with country " + country + " and year " + year + " has been succesfully deleted, sending 204...");
                   response.sendStatus(204); //no content
               } else {
                   console.log("WARNING: There are no countries to delete");
