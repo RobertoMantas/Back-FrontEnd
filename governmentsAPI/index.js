@@ -211,7 +211,7 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
 });
 
 
-  //PUT over a single resource
+  //PUT over a single resources g
   app.put(BASE_API_PATH + "/governments/:country/:year", function (request, response) {
     var updatedStat = request.body;
     var country = request.params.country;
