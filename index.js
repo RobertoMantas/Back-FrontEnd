@@ -29,7 +29,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bp.json());
 
 
-var API_KEY = "keyRob";
+var API_KEY_Rob = "keyRob";
 
 // Helper method to check for apikey
 var apiKeyCheck = function (request, response) {
@@ -38,7 +38,7 @@ var apiKeyCheck = function (request, response) {
     response.sendStatus(401);
     return false;
   }
-  if (request.query.apikey !== API_KEY) {
+  if (request.query.apikey !== API_KEY_Rob) {
     console.error('WARNING: Incorrect apikey was used!');
     response.sendStatus(403);
     return false;
