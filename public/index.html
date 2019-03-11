@@ -1,30 +1,36 @@
-<html>
+<html ng-app="ManagerApp">
 
-<body>
-    <h1>SOS1617-07</h1>
-    <ul>
-        <li>
-            <h2>Team 07</h2>
-        </li>
-        <ul>
-                <li><h3><a href="https://github.com/jdiazcabe")>Jesús Díaz Cabello</a></h3></li>
-                <li><h3><a href="https://github.com/jlgarciam")>Jose Luis Gacía Mora</a></h3></li>
-                <li><h3><a href="https://github.com/RobertoMantas")>Roberto Mantas Nakhai</a></h3></li>
-            </ul>
-            <li><h3>Project description:</h3>Our sources of information are aimed at analyzing the impact of the happiness of a country analysing different paraments as GPD, trust on governments and freedom of a nation.</li>
-            <li><h3>Repository:</h3><a href="https://github.com/mii-dgsin/DGSIN1819-03")>DGSIN1819/DGSIN1819-03</a></li>
-        
-        </ul>
+<head>
+        <title>DSGIN-03</title>
+
+    <!-- ManagerApp -->
+
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+      <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css" type="text/css" />
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+   <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="managementApp.js"></script>
     
-    <h2>API</h2>
-        <ul>
-            
-                <li><a href="https://dgsin1819-03.herokuapp.com/api/v1/">Jesús Díaz Cabello (familiesAPI: Study of the ....... over the years)</a></br></li>
-                <li><a href="https://dgsin1819-03.herokuapp.com/api/v1/">Jose Luis Gacía Mora (freedomAPI: Study of the ........ over the years)</a></br></li>
-                  <li><a href="https://dgsin1819-03.herokuapp.com/api/v1/governments?apikey=keyRob">Roberto Mantas Nakhai (governmentAPI: Study of government trust, generosity and confidence in different countries over the years)</a></br></li>
-                 </ul>
-        
-   
-</body>
 
+    <!-- Roberto -->
+    <script type="text/javascript" src="frontGovernmentAPI/listCtrl.js"></script>
+    <script type="text/javascript" src="frontGovernmentAPI/editCtrl.js"></script>
+   
+    <!-- Selu -->
+    <script type="text/javascript" src="frontFamiliesAPI/listCtrl.js"></script>
+    <script type="text/javascript" src="frontFamiliesAPI/editCtrl.js"></script>
+    <!-- Jesús -->
+    <script type="text/javascript" src="frontFamiliesAPI/listCtrl.js"></script>
+    <script type="text/javascript" src="frontFamiliesAPI/editCtrl.js"></script>
+   
+</head>
+<body>
+    
+        <div ng-view></div>
+    </body>
 </html>
+
