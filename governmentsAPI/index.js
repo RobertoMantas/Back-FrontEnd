@@ -1,5 +1,5 @@
 // Get rid of _id when returning governments
-function formatGovernments (governments) {
+function formatContacts (governments) {
   return governments.map((g) => {
       delete g._id // removes the property
       return g;
