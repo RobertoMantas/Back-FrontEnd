@@ -23,28 +23,34 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
         console.log('INFO: Empty DB, loading initial data');
         var country = [{
           "country": "Sweden",
-          "year": "2016",
+          "year": 2016,
           "trustGovernment": 0.40,
           "generosity": 0.83,
           "confidence": 7.27
         }, {
           "country": "Norway",
-          "year": "2016",
+          "year": 2016,
           "trustGovernment": 0.35,
           "generosity": 0.37,
           "confidence": 7.42
         }, {
           "country": "Spain",
-          "year": "2015",
+          "year": 2015,
           "trustGovernment": 0.06,
           "generosity": 0.17,
           "confidence": 6.28
         }, {
           "country": "Portugal",
-          "year": "2015",
+          "year": 2015,
           "trustGovernment": 0.01,
           "generosity": 0.11,
           "confidence": 5.03
+        }, {
+          "country": "Portugal",
+          "year": 2017,
+          "trustGovernment": 0.02,
+          "generosity": 0.14,
+          "confidence": 5.33
         }
         ];
 
@@ -58,22 +64,143 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
       }
     });
   });
-//GET COLLECTION
-  app.get(BASE_API_PATH + "/governments", function (request, response) {
-    console.log("INFO: New GET request to /governments");
-    if (apiKeyCheck(request, response) == true) {
-      dbRoberto.find({}).toArray(function (err, governments) {
-        if (err) {
-          console.error('WARNING: Error getting data from DB');
-          response.sendStatus(500); // internal server error
-        } else {
-          var formatGovernments = formatContacts(governments);
-          console.log("INFO: Sending governments: " + JSON.stringify(governments, 2, null));
-          response.send(governments);
-        }
-      });
-    }
-  });
+
+  // pagination and search
+  //Example for from to: http://localhost:8089/api/v1/governments?apikey=keyRob&from=3&&to=2015
+  //Example for limit offset: http://localhost:8089/api/v1/governments?apikey=keyRob&limit=3&&offset=1
+  //Example for limit offset: http://localhost:8089/api/v1/governments?apikey=keyRob&limit=3&&offset=1&from=3&&to=2016
+app.get(BASE_API_PATH + "/governments", function (request, response) {
+  if (!apiKeyCheck(request, response)) return;
+
+  console.log("INFO2: New GET request to /governments ");
+  
+       /*PRUEBA DE BUSQUEDA */
+          var limit = parseInt(request.query.limit);
+          var offset = parseInt(request.query.offset);
+          var from = request.query.from;
+          var to = request.query.to;
+          var aux = [];
+          var aux2= [];
+          var aux3 = [];
+
+          
+          if (limit && offset >=0) {
+            console.log("INFO3: New GET request to /governments ");
+
+          dbRoberto.find({}).skip(offset).limit(limit).toArray(function(err, countries) {
+              if (err) {
+                  console.error('WARNING: Error getting data from DB');
+                   response.sendStatus(500); // internal server error
+              } else {
+                   if (countries.length === 0) {
+                          response.send(aux3);
+            console.log("INFO3: Empty you have to  loadInitialData ");
+
+                          return;
+                      }
+                  console.log("INFO: Sending countries:: " + JSON.stringify(countries, 2, null));
+                  if (from && to) {
+                    console.log("INFO33: New GET request to /governments ");
+
+                          aux = buscador(countries, aux, from, to);
+                          if (aux.length > 0) {
+                              aux2 = aux.slice(offset, offset+limit);
+                              console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                              console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(countries, 2, null));
+                              console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                              response.send(aux2);
+                          }
+                          else {
+                              
+                              response.send(404); // No content 
+                              return;
+                          }
+                      }
+                      else {
+                          response.send(countries);
+                      }
+              }
+          });
+          
+          }
+          else {
+
+              dbRoberto.find({}).toArray(function(err, countries) {
+                  if (err) {
+                      console.error('ERROR from database');
+                      response.sendStatus(500); // internal server error
+                  }
+                  else {
+                      if (countries.length === 0) {
+                          
+                          response.sendStatus(204);
+                      console.log("INFO3: Empty you have to  loadInitialData ");
+
+                          return;
+                      }
+                      console.log("INFO: Sending governments: " + JSON.stringify(countries, 2, null));
+
+                      if (from && to) {
+                      console.log('INFO: New GET request to /governments from %d to %d', from, to);
+
+                          aux = buscador(countries, aux, from, to);
+                          if (aux.length > 0) {
+                              response.send(aux);
+                          }
+                          else {
+                              response.sendStatus(404); //No content
+                              return;
+                          }
+                      }
+                      else {
+                          response.send(countries);
+                      }
+                  }
+              });
+          }
+
+});
+
+
+
+
+
+// SEARCH FUNCTION
+
+var buscador = function(base, conjuntoauxiliar, desde, hasta) {
+
+  var from = parseInt(desde);
+  var to = parseInt(hasta);
+
+
+  for (var j = 0; j < base.length; j++) {
+      var anyo = base[j].year;
+      if (to >= anyo && from <= anyo) {
+
+          conjuntoauxiliar.push(base[j]);
+      }
+  }
+
+  return conjuntoauxiliar;
+
+};
+
+// //GET COLLECTION
+//   app.get(BASE_API_PATH + "/governments", function (request, response) {
+//     console.log("INFO: New GET request to /governments");
+//     if (apiKeyCheck(request, response) == true) {
+//       dbRoberto.find({}).toArray(function (err, governments) {
+//         if (err) {
+//           console.error('WARNING: Error getting data from DB');
+//           response.sendStatus(500); // internal server error
+//         } else {
+//           var formatGovernments = formatContacts(governments);
+//           console.log("INFO: Sending governments: " + JSON.stringify(governments, 2, null));
+//           response.send(governments);
+//         }
+//       });
+//     }
+//   });
 
 
 // GET a collection de paises en un mismo año 
@@ -211,7 +338,7 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
 });
 
 
-  //PUT over a single resource
+  //PUT over a single resources g
   app.put(BASE_API_PATH + "/governments/:country/:year", function (request, response) {
     var updatedStat = request.body;
     var country = request.params.country;
