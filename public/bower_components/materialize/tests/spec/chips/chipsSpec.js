@@ -1,16 +1,16 @@
-describe("Chips", function () {
+describe("Chips Plugin", function () {
 
   beforeEach(function() {
     loadFixtures('chips/chipsFixture.html');
-    $('.chips').chips();
-    $('.chips-initial').chips({
+    $('.chips').material_chip();
+    $('.chips-initial').material_chip({
       data: [{ tag: 'Apple' }, { tag: 'Microsoft' }, { tag: 'Google' }],
     });
-    $('.chips-placeholder').chips({
+    $('.chips-placeholder').material_chip({
       placeholder: 'Enter a tag',
       secondaryPlaceholder: '+Tag',
     });
-    $('.chips-autocomplete').chips({
+    $('.chips-autocomplete').material_chip({
       autocompleteData: {
         'Apple': null,
         'Microsoft': null,
@@ -19,7 +19,7 @@ describe("Chips", function () {
     });
   });
 
-  describe("chips plugin", function () {
+  describe("Chips", function () {
     var $chips, $input;
 
     // beforeEach(function() {
@@ -27,10 +27,10 @@ describe("Chips", function () {
 
     it("should work with multiple initializations", function () {
       $chips = $('.chips').first();
-      $chips.chips();
-      $chips.chips();
-      $chips.chips();
-      $chips.chips();
+      $chips.material_chip();
+      $chips.material_chip();
+      $chips.material_chip();
+      $chips.material_chip();
 
       $input = $chips.find('input');
 
@@ -43,7 +43,9 @@ describe("Chips", function () {
 
       $input.val('one');
 
-      keydown($input[0], 13);
+      var e = $.Event('keydown');
+      e.which = 13;
+      $input.trigger(e);
 
       setTimeout(function() {
         var numChips = $chips.find('.chip').length;
@@ -76,61 +78,6 @@ describe("Chips", function () {
         done();
       }, 400);
 
-    });
-
-    it("should have working callbacks", function(done) {
-      $chips = $('.chips').first();
-      var chipAdd = false;
-      var chipAdded = null;
-      var chipSelect = false;
-      var chipSelected = null;
-      var chipDelete = false;
-      var chipDeleted = null;
-      $chips.chips({
-        data: [{ tag: 'One' }, { tag: 'Two' }, { tag: 'Three' }],
-        onChipAdd: function(chipsEl, chipEl) {
-          chipAdded = chipEl;
-          chipAdd = true;
-        },
-        onChipSelect: function(chipsEl, chipEl) {
-          chipSelected = chipEl;
-          chipSelect = true;
-        },
-        onChipDelete: function(chipsEl, chipEl) {
-          chipDeleted = chipEl;
-          chipDelete = true;
-        }
-      });
-
-      $input = $chips.find('input');
-      $input.val('Four');
-
-      expect(chipAdd).toEqual(false, 'callback not yet fired');
-      expect(chipSelect).toEqual(false, 'callback not yet fired');
-      expect(chipDelete).toEqual(false, 'callback not yet fired');
-
-      keydown($input[0], 13);
-
-      setTimeout(function() {
-        expect(chipAdd).toEqual(true, 'add callback fired');
-        expect(chipAdded.childNodes[0].nodeValue).toEqual('Four', 'add callback provides correct chip element');
-
-        click($chips.find('.chip')[1]);
-
-        setTimeout(function() {
-          expect(chipSelect).toEqual(true, 'select callback fired');
-          expect(chipSelected.childNodes[0].nodeValue).toEqual('Two', 'select callback provides correct chip element');
-
-          click($chips.find('.close')[2]);
-
-          setTimeout(function() {
-            expect(chipDelete).toEqual(true, 'delete callback fired');
-          expect(chipDeleted.childNodes[0].nodeValue).toEqual('Three', 'add callback provides correct chip element');
-
-            done();
-          }, 100);
-        }, 100);
-      }, 100);
     });
   });
 
