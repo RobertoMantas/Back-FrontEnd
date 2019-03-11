@@ -90,19 +90,19 @@ angular.module("ManagerApp").
                 }, function (response) {
                     switch (response.status) {
                         case 401:
-                            M.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
                             break;
                         case 403:
-                            M.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
                             break;
                         case 404:
                             $scope.maxPages = 1;
                             dataCache = {};
                             $scope.refreshPage();
-                            M.toast('<i class="material-icons">error_outline</i> No data found!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> No data found!', 4000);
                             break;
                         default:
-                            M.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
                             break;
                     }
                 });
@@ -113,24 +113,24 @@ angular.module("ManagerApp").
                 .post("../api/v1/governments" + "?" + "apikey=" + $rootScope.apikey, $scope.newData)
                 .then(function (response) {
                     console.log("Data added!");
-                    M.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
+                    Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
                     $scope.refreshBotton();
                     refresh();
                 }, function (response) {
-                    M.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
+                    Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
                 }, function (response) {
                     switch (response.status) {
                         case 400:
-                            M.toast('<i class="material-icons">error_outline</i> Error adding data - incorrect data was entered!!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error adding data - incorrect data was entered!!', 4000);
                             break;
                         case 401:
-                            M.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
                             break;
                         case 403:
-                            M.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
                             break;
                         default:
-                            M.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
                             break;
                     }
                 });
@@ -141,13 +141,13 @@ angular.module("ManagerApp").
                 .delete("../api/v1/governments/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey)
                 .then(function (response) {
                     console.log("Data " + data.country + " deleted!");
-                    M.toast('<i class="material-icons">done</i> ' + data.country + ' has been deleted succesfully!', 4000);
+                    Materialize.toast('<i class="material-icons">done</i> ' + data.country + ' has been deleted succesfully!', 4000);
                     properties = "";
                     $scope.maxPages = 1;
                     $scope.currentPage = 1;
                     refresh();
                 }, function (response) {
-                    M.toast('<i class="material-icons">error_outline</i> Error deleting data!', 4000);
+                    Materialize.toast('<i class="material-icons">error_outline</i> Error deleting data!', 4000);
                 });
         };
 
@@ -156,13 +156,13 @@ angular.module("ManagerApp").
                 .delete("../api/v1/governments" + "?" + "apikey=" + $rootScope.apikey)
                 .then(function (response) {
                     console.log("All data deleted!");
-                    M.toast('<i class="material-icons">done</i> All data has been deleted succesfully!', 4000);
+                    Materialize.toast('<i class="material-icons">done</i> All data has been deleted succesfully!', 4000);
                     properties = "";
                     $scope.maxPages = 1;
                     $scope.currentPage = 1;
                     refresh();
                 }, function (response) {
-                    M.toast('<i class="material-icons">error_outline</i> Error deleting all data!', 4000);
+                    Materialize.toast('<i class="material-icons">error_outline</i> Error deleting all data!', 4000);
                 });
         };
 
@@ -173,14 +173,14 @@ angular.module("ManagerApp").
                     .get("../api/v1/governments/loadInitialData" + "?" + "apikey=" + $rootScope.apikey)
                     .then(function (response) {
                         console.log("Initial data loaded");
-                        M.toast('<i class="material-icons">done</i> Loaded initial data succesfully!', 4000);
+                        Materialize.toast('<i class="material-icons">done</i> Loaded initial data succesfully!', 4000);
                         refresh();
                     }, function (response) {
-                        M.toast('<i class="material-icons">error_outline</i> Error adding initial data!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error adding initial data!', 4000);
                     });
             }
             else {
-                M.toast('<i class="material-icons">error_outline</i> List must be empty to add initial data!', 4000);
+                Materialize.toast('<i class="material-icons">error_outline</i> List must be empty to add initial data!', 4000);
                 console.log("List must be empty!");
             }
         };
@@ -194,7 +194,7 @@ angular.module("ManagerApp").
                 $http
                     .get("../api/v1/governments" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                     .then(function (response) {
-                        M.toast('<i class="material-icons">done</i> Api key changed successfully!', 4000);
+                        Materialize.toast('<i class="material-icons">done</i> Api key changed successfully!', 4000);
                         $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
                         dataCache = response.data;
                         $scope.refreshPage();
@@ -204,13 +204,13 @@ angular.module("ManagerApp").
                         $scope.refreshPage();
                         switch (response.status) {
                             case 401:
-                                M.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                                Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
                                 break;
                             case 403:
-                                M.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                                Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
                                 break;
                             default:
-                                M.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                                Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
                                 break;
                         }
                     });
@@ -249,7 +249,7 @@ angular.module("ManagerApp").
                 }
 
 
-                M.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
+                Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
                 refresh();
             }
         });
