@@ -1,0 +1,35 @@
+<div ng-controller="CountryEditCtrl">
+    <div class="container">
+        <h1>Edit Country</h1>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <h3>{{editDataUnit.country}} ({{editDataUnit.year}})</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input class="form-control" type="text" id="minimumS" ng-model="editDataUnit['trustGovernment']">
+                        <label for="minimumS" class="active">Trust on Government</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input class="form-control" type="text" id="averageS" ng-model="editDataUnit['generosity']">
+                        <label for="averageS" class="active">Generosity</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input class="form-control" type="text" id="povertyE" ng-model="editDataUnit['confidence']">
+                        <label for="povertyE" class="active">Confidence Level</label>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col s12 right-align">
+                <button class="btn waves-effect waves black" ng-click="editData(editDataUnit)"><i class="material-icons left">edit</i>Edit</button>
+                <button class="btn waves-effect waves red" ng-click="discardData()"><i class="material-icons left">delete</i>Discard changes</button>
+            </div>
+        </div>
+    </div>
+</div>
