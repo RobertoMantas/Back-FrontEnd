@@ -7,5 +7,9 @@ angular.module("ManagerApp", ["ngRoute"]).config(function ($routeProvider) {
             templateUrl: "frontGovernmentAPI/list.html",
             controller: "GovernmentListCtrl"
         })
+        .when("/governments/:country/:year", {
+            templateUrl: "frontGovernmentAPI/edit.html",
+            controller: "CountryEditCtrl"
+        })
     console.log("App initialized and configured");
 });
