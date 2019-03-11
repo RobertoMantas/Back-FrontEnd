@@ -46,7 +46,7 @@ var apiKeyCheck = function (request, response) {
   return true;
 };
 //When we develop the front end we wont need this as with a button we would be able to 
-//load the initial data
+//load the initial data.
 var initialgovernment = [{
   
     "country": "Sweden",
