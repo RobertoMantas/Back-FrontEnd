@@ -45,33 +45,40 @@ var apiKeyCheck = function (request, response) {
   }
   return true;
 };
-
+//When we develop the front end we wont need this as with a button we would be able to 
+//load the initial data.
 var initialgovernment = [{
-  "country": "Sweden",
-  "year": "2016",
-  "trustGovernment": 0.40,
-  "generosity": 0.83,
-  "confidence": 7.27
-}, {
-  "country": "Norway",
-  "year": "2016",
-  "trustGovernment": 0.35,
-  "generosity": 0.37,
-  "confidence": 7.42
-}, {
-  "country": "Spain",
-  "year": "2017",
-  "trustGovernment": 0.06,
-  "generosity": 0.17,
-  "confidence": 6.28
-}, {
-  "country": "Portugal",
-  "year": "2015",
-  "trustGovernment": 0.01,
-  "generosity": 0.11,
-  "confidence": 5.03
-}
-];
+  
+    "country": "Sweden",
+    "year": 2016,
+    "trustGovernment": 0.40,
+    "generosity": 0.83,
+    "confidence": 7.27
+  }, {
+    "country": "Norway",
+    "year": 2016,
+    "trustGovernment": 0.35,
+    "generosity": 0.37,
+    "confidence": 7.42
+  }, {
+    "country": "Spain",
+    "year": 2015,
+    "trustGovernment": 0.06,
+    "generosity": 0.17,
+    "confidence": 6.28
+  }, {
+    "country": "Portugal",
+    "year": 2015,
+    "trustGovernment": 0.01,
+    "generosity": 0.11,
+    "confidence": 5.03
+  }, {
+    "country": "Portugal",
+    "year": 2017,
+    "trustGovernment": 0.02,
+    "generosity": 0.14,
+    "confidence": 5.33
+  }];
 
 MongoClient.connect(mdbURLRoberto, (err, client) => {
   if (err) {
