@@ -70,16 +70,16 @@
                     <tr>
                         <td><input class="form-control" ng-model="newData.country" /></td>
                         <td><input class="form-control" ng-model="newData.year" /></td>
-                        <td><input class="form-control" ng-model="newData['generosity']" /></td>
                         <td><input class="form-control" ng-model="newData['trustGovernment']" /></td>
+                        <td><input class="form-control" ng-model="newData['generosity']" /></td>
                         <td><input class="form-control" ng-model="newData['confidence']" /></td>
                         <td><button class="btn waves-effect waves black" ng-click="addData()"><i class="material-icons">add</i></button></td>
                     </tr>
                     <tr ng-repeat="dataUnit in data">
                         <td>{{dataUnit.country}}</td>
                         <td>{{dataUnit.year}}</td>
-                        <td>{{dataUnit["generosity"]}}</td>
                         <td>{{dataUnit["trustGovernment"]}}</td>
+                        <td>{{dataUnit["generosity"]}}</td>
                         <td>{{dataUnit["confidence"]}}</td>
                         <td><a href="#!/governments/{{dataUnit.country}}/{{dataUnit.year}}"><button class="btn waves-effect waves black"><i class="material-icons">edit</i></button></a> <button class="btn waves-effect waves  red" ng-click="delData(dataUnit)"><i class="material-icons">delete</i></button></td>
                     </tr>
