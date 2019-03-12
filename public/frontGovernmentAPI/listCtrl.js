@@ -247,8 +247,6 @@ angular.module("ManagerApp").
                 if ($scope.from && $scope.to) {
                     properties = "from=" + $scope.from + "&to=" + $scope.to;
                 }
-
-
                 Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
                 refresh();
             }

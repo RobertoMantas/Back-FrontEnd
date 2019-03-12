@@ -25,33 +25,33 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
   
             "country": "Sweden",
             "year": "2016",
-            "trustGovernment": 0.40,
-            "generosity": 0.83,
-            "confidence": 7.27
+            "trustGovernment": "0.40",
+            "generosity": "0.83",
+            "confidence": "7.27"
           }, {
             "country": "Norway",
             "year": "2016",
-            "trustGovernment": 0.35,
-            "generosity": 0.37,
-            "confidence": 7.42
+            "trustGovernment": "0.35",
+            "generosity": "0.37",
+            "confidence": "7.42"
           }, {
             "country": "Spain",
             "year": "2015",
-            "trustGovernment": 0.06,
-            "generosity": 0.17,
-            "confidence": 6.28
+            "trustGovernment": "0.06",
+            "generosity": "0.17",
+            "confidence": "6.28"
           }, {
             "country": "Portugal",
             "year": "2015",
-            "trustGovernment": 0.01,
-            "generosity": 0.11,
-            "confidence": 5.03
+            "trustGovernment": "0.01",
+            "generosity": "0.11",
+            "confidence":" 5.03"
           }, {
             "country": "Portugal",
             "year": "2017",
-            "trustGovernment": 0.02,
-            "generosity": 0.14,
-            "confidence": 5.33
+            "trustGovernment": "0.02",
+            "generosity": "0.14",
+            "confidence": "5.33"
           }];
 
         dbRoberto.insert(country);
@@ -104,7 +104,6 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
 
                           aux = buscador(countries, aux, from, to);
                           if (aux.length > 0) {
-                            var formatGovernments = formatContacts(countries);
                               aux2 = aux.slice(offset, offset+limit);
                               console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
                               console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(countries, 2, null));
@@ -147,7 +146,6 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
 
                           aux = buscador(countries, aux, from, to);
                           if (aux.length > 0) {
-                            var formatGovernments = formatContacts(countries);
                               response.send(aux);
                           }
                           else {
@@ -226,8 +224,6 @@ app.get(BASE_API_PATH + "/governments/:year", function (request, response) {
           } else if (results.length > 0) { 
                   var result = results; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
-                  var formatGovernments = formatContacts(result);
-
                   response.send(result);
           } else {
                   console.log("WARNING: There are not any result with country " + country);
@@ -279,8 +275,6 @@ app.get(BASE_API_PATH + "/governments/:country/:year", function (request, respon
           } else if (results.length > 0) { 
                   var result = results[0]; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
-                  var formatGovernments = formatContacts(result);
-
                   response.send(result);
               } else {
                   console.log("WARNING: There are not any country with name " + country +  "and year " + year);
@@ -371,7 +365,6 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
                 } else if (provinces.length > 0) {
                         dbRoberto.update({country: country, year: year}, updatedStat);
                         console.log("INFO: Modifying government with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
-                        var formatGovernments = formatContacts(updatedStat);
 
                         response.send(updatedStat); // return the updated contact
                     } else {
