@@ -25,33 +25,33 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
   
             "country": "Sweden",
             "year": "2016",
-            "trustGovernment": 0.40,
-            "generosity": 0.83,
-            "confidence": 7.27
+            "trustGovernment": "0.40",
+            "generosity": "0.83",
+            "confidence": "7.27"
           }, {
             "country": "Norway",
             "year": "2016",
-            "trustGovernment": 0.35,
-            "generosity": 0.37,
-            "confidence": 7.42
+            "trustGovernment": "0.35",
+            "generosity": "0.37",
+            "confidence": "7.42"
           }, {
             "country": "Spain",
             "year": "2015",
-            "trustGovernment": 0.06,
-            "generosity": 0.17,
-            "confidence": 6.28
+            "trustGovernment": "0.06",
+            "generosity": "0.17",
+            "confidence": "6.28"
           }, {
             "country": "Portugal",
             "year": "2015",
-            "trustGovernment": 0.01,
-            "generosity": 0.11,
-            "confidence": 5.03
+            "trustGovernment": "0.01",
+            "generosity": "0.11",
+            "confidence":" 5.03"
           }, {
             "country": "Portugal",
             "year": "2017",
-            "trustGovernment": 0.02,
-            "generosity": 0.14,
-            "confidence": 5.33
+            "trustGovernment": "0.02",
+            "generosity": "0.14",
+            "confidence": "5.33"
           }];
 
         dbRoberto.insert(country);
@@ -117,6 +117,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
                           }
                       }
                       else {
+                        var formatGovernments = formatContacts(countries);
                           response.send(countries);
                       }
               }
@@ -153,6 +154,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
                           }
                       }
                       else {
+                        var formatGovernments = formatContacts(countries);
                           response.send(countries);
                       }
                   }
@@ -240,6 +242,8 @@ app.get(BASE_API_PATH + "/governments/:year", function (request, response) {
               console.error('WARNING: Error getting data from DB');
               response.sendStatus(500); // internal server error
           } else if (results.length > 0) { 
+            var formatGovernments = formatContacts(result);
+
                   var result = results; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
                   response.send(result);
@@ -361,6 +365,7 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
                 } else if (provinces.length > 0) {
                         dbRoberto.update({country: country, year: year}, updatedStat);
                         console.log("INFO: Modifying government with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
+
                         response.send(updatedStat); // return the updated contact
                     } else {
                         console.log("WARNING: There are not any result with province " + country);
