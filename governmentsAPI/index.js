@@ -104,6 +104,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
 
                           aux = buscador(countries, aux, from, to);
                           if (aux.length > 0) {
+                            var formatGovernments = formatContacts(countries);
                               aux2 = aux.slice(offset, offset+limit);
                               console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
                               console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(countries, 2, null));
@@ -117,6 +118,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
                           }
                       }
                       else {
+                        var formatGovernments = formatContacts(countries);
                           response.send(countries);
                       }
               }
@@ -145,6 +147,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
 
                           aux = buscador(countries, aux, from, to);
                           if (aux.length > 0) {
+                            var formatGovernments = formatContacts(countries);
                               response.send(aux);
                           }
                           else {
@@ -153,6 +156,7 @@ app.get(BASE_API_PATH + "/governments", function (request, response) {
                           }
                       }
                       else {
+                        var formatGovernments = formatContacts(countries);
                           response.send(countries);
                       }
                   }
@@ -222,6 +226,8 @@ app.get(BASE_API_PATH + "/governments/:year", function (request, response) {
           } else if (results.length > 0) { 
                   var result = results; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
+                  var formatGovernments = formatContacts(result);
+
                   response.send(result);
           } else {
                   console.log("WARNING: There are not any result with country " + country);
@@ -240,6 +246,8 @@ app.get(BASE_API_PATH + "/governments/:year", function (request, response) {
               console.error('WARNING: Error getting data from DB');
               response.sendStatus(500); // internal server error
           } else if (results.length > 0) { 
+            var formatGovernments = formatContacts(result);
+
                   var result = results; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
                   response.send(result);
@@ -271,6 +279,8 @@ app.get(BASE_API_PATH + "/governments/:country/:year", function (request, respon
           } else if (results.length > 0) { 
                   var result = results[0]; //since we expect to have exactly ONE contact with this name
                   console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
+                  var formatGovernments = formatContacts(result);
+
                   response.send(result);
               } else {
                   console.log("WARNING: There are not any country with name " + country +  "and year " + year);
@@ -361,6 +371,8 @@ app.put(BASE_API_PATH + "/governments", function (request, response) {
                 } else if (provinces.length > 0) {
                         dbRoberto.update({country: country, year: year}, updatedStat);
                         console.log("INFO: Modifying government with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
+                        var formatGovernments = formatContacts(updatedStat);
+
                         response.send(updatedStat); // return the updated contact
                     } else {
                         console.log("WARNING: There are not any result with province " + country);
