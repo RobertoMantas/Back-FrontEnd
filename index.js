@@ -53,33 +53,33 @@ var initialgovernment = [{
   
     "country": "Sweden",
     "year": "2016",
-    "trustGovernment": 0.40,
-    "generosity": 0.83,
-    "confidence": 7.27
+    "trustGovernment": "0.40",
+    "generosity": "0.83",
+    "confidence": "7.27"
   }, {
     "country": "Norway",
     "year": "2016",
-    "trustGovernment": 0.35,
-    "generosity": 0.37,
-    "confidence": 7.42
+    "trustGovernment": "0.35",
+    "generosity": "0.37",
+    "confidence": "7.42"
   }, {
     "country": "Spain",
     "year": "2015",
-    "trustGovernment": 0.06,
-    "generosity": 0.17,
-    "confidence": 6.28
+    "trustGovernment": "0.06",
+    "generosity": "0.17",
+    "confidence": "6.28"
   }, {
     "country": "Portugal",
     "year": "2015",
-    "trustGovernment": 0.01,
-    "generosity": 0.11,
-    "confidence": 5.03
+    "trustGovernment": "0.01",
+    "generosity": "0.11",
+    "confidence":" 5.03"
   }, {
     "country": "Portugal",
     "year": "2017",
-    "trustGovernment": 0.02,
-    "generosity": 0.14,
-    "confidence": 5.33
+    "trustGovernment": "0.02",
+    "generosity": "0.14",
+    "confidence": "5.33"
   }];
 
 MongoClient.connect(mdbURLRoberto, (err, client) => {
@@ -93,7 +93,7 @@ MongoClient.connect(mdbURLRoberto, (err, client) => {
         console.error("Error getting data from dbRoberto: " + err);
       } else if (government.length == 0) {
         console.info("Adding initial government to empty dbRoberto");
-        dbRoberto.insert(initialgovernment);
+       // dbRoberto.insert(initialgovernment);
       } else {
         console.info("Connected to the dbRoberto with " + government.length + " government");
       }
