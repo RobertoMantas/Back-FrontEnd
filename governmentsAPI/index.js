@@ -41,7 +41,7 @@ module.exports.register = function (app, dbRoberto, BASE_API_PATH, apiKeyCheck) 
             "generosity": "0.17",
             "confidence": "6.28"
           }, {
-            "country": "Portugal",
+            "country": "Russia",
             "year": "2015",
             "trustGovernment": "0.01",
             "generosity": "0.11",
