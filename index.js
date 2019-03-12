@@ -22,17 +22,25 @@ familiesAPI.register(app);
 freedomsAPI.register(app);
 
 
-app.get("/docsroberto", (req, res) => {
-  res.redirect("https://documenter.getpostman.com/view/1779152/S11RJvKA");
-});
-
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bp.json());
 app.use(cors());
 
+app.listen(process.env.PORT || 8089, () => {
+  console.log("Server ready");
+}).on("error", (e) => {
+  console.error("Server NOT ready!");
+});
+
+
+
+//------------------------------------------------Roberto--------------------------------------------------------------------------
+
+app.get("/docsroberto", (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/1779152/S11RJvKA");
+});
 
 var API_KEY_Rob = "keyRob";
-
 // Helper method to check for apikey
 var apiKeyCheck = function (request, response) {
   if (!request.query.apikey) {
@@ -47,40 +55,6 @@ var apiKeyCheck = function (request, response) {
   }
   return true;
 };
-//When we develop the front end we wont need this as with a button we would be able to 
-//load the initial data.
-var initialgovernment = [{
-  
-    "country": "Sweden",
-    "year": "2016",
-    "trustGovernment": "0.40",
-    "generosity": "0.83",
-    "confidence": "7.27"
-  }, {
-    "country": "Norway",
-    "year": "2016",
-    "trustGovernment": "0.35",
-    "generosity": "0.37",
-    "confidence": "7.42"
-  }, {
-    "country": "Spain",
-    "year": "2015",
-    "trustGovernment": "0.06",
-    "generosity": "0.17",
-    "confidence": "6.28"
-  }, {
-    "country": "Portugal",
-    "year": "2015",
-    "trustGovernment": "0.01",
-    "generosity": "0.11",
-    "confidence":" 5.03"
-  }, {
-    "country": "Portugal",
-    "year": "2017",
-    "trustGovernment": "0.02",
-    "generosity": "0.14",
-    "confidence": "5.33"
-  }];
 
 MongoClient.connect(mdbURLRoberto, (err, client) => {
   if (err) {
@@ -93,7 +67,6 @@ MongoClient.connect(mdbURLRoberto, (err, client) => {
         console.error("Error getting data from dbRoberto: " + err);
       } else if (government.length == 0) {
         console.info("Adding initial government to empty dbRoberto");
-       // dbRoberto.insert(initialgovernment);
       } else {
         console.info("Connected to the dbRoberto with " + government.length + " government");
       }
@@ -102,13 +75,38 @@ MongoClient.connect(mdbURLRoberto, (err, client) => {
     //var governmentsAPI = require("./governmentsAPI");
 
     governmentsAPI.register(app, dbRoberto, BASE_API_PATH, apiKeyCheck);
-
-    app.listen(process.env.PORT || 8089, () => {
-      console.log("Server ready");
-    }).on("error", (e) => {
-      console.error("Server NOT ready!");
-    });
+    
   }
 });
 
 
+app.use("/proxy/governments", (req, res) => {
+  console.log("INFO: New GET request to /proxy/governments/");
+  var http = require('http');
+  var options = {
+      host: 'sos1617-08.herokuapp.com',
+      path: '/api/v1/wages?apikey=hf5HF86KvZ'
+  };
+
+  var request = http.request(options, (response) => {
+      var input = '';
+      response.on('data', function(chunk) {
+          input += chunk;
+      });
+
+      response.on('end', function() {
+          console.log("INFO: The Proxy request to /proxy/governments/ worked correctly :)");
+          res.send(input);
+      });
+  });
+
+  request.on('error', function(e) {
+      console.log("WARNING: New GET request to /proxy/governments/ - ERROR TRYING TO ACCESS, sending 503...");
+      res.sendStatus(503);
+  });
+  request.end();
+
+
+});
+
+//------------------------------------------------Roberto--------------------------------------------------------------------------
