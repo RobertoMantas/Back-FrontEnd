@@ -1,0 +1,138 @@
+Recurso base: 
+   	.../api/v1/governments?apikey=keyRob
+Ejemplo de un dato:
+       { �country�: �Sweden�, �year�: 2016"trustGovernment": 0.4, "generosity": 0.83, "confidence": 7.27} 
+
+Acceder a todas las estad�sticas:
+   Petici�n:
+   	GET	.../ governments?apikey=keyRob
+   Respuesta:
+
+  {
+    "country": "Sweden",
+    "year": "2016",
+    "trustGovernment": "0.40",
+    "generosity": "0.83",
+    "confidence": "7.27"
+  },
+  {
+    "country": "Norway",
+    "year": "2016",
+    "trustGovernment": "0.35",
+    "generosity": "0.37",
+    "confidence": "7.42"
+  },
+  {
+    "country": "Spain",
+    "year": "2015",
+    "trustGovernment": "0.06",
+    "generosity": "0.17",
+    "confidence": "6.28"
+  },
+  {
+    "country": "Russia",
+    "year": "2015",
+    "trustGovernment": "0.01",
+    "generosity": "0.11",
+    "confidence": " 5.03"
+  },
+  {
+    "country": "Portugal",
+    "year": "2017",
+    "trustGovernment": "0.02",
+    "generosity": "0.14",
+    "confidence": "5.33"
+  }
+] 
+
+Acceder a todas las estad�sticas de Sweden:
+   Petici�n:
+   	GET	.../ governments/Sweden?apikey=keyRob
+   Respuesta:
+       { �country�: �Sweden�, �year�: 2016"trustGovernment": 0.4, "generosity": 0.83, "confidence": 7.27},
+       { �country�: �Sweden�, �year�: 2015"trustGovernment": 0.4, "generosity": 0.83, "confidence": 7.27} 
+      
+]
+
+
+
+Acceder a una estad�stica concreta:
+   Petici�n:
+   	GET	...api/v1/governments/Sweden/2016?apikey=keyRob
+   Respuesta:
+{ �country�: �Sweden�, �year�: 2016"trustGovernment": 0.4, "generosity": 0.83, "confidence": 7.27}
+Acceder a todas las estad�sticas de un a�o:
+   Petici�n:
+   	GET	.../ api/v1/governments/2016?apikey=keyRob 
+   Respuesta:
+       [ { �town�: �seville�, �year�: 2016, �population� : 500000 },
+ �{ �town�: �cadiz�, �year�: 2016, �population� : 100000 },
+ �... ]
+
+Crear una nueva estad�stica:
+   Petici�n:
+   	POST	.../api/v1/governments/?apikey=keyRob 
+    { "country": "Sweden", "year": "2015", "trustGovernment": 0.411, "generosity": 0.612, "confidence": 0.27 } 
+   Respuesta:
+   	201 CREATED
+
+Actualizar una estad�stica:
+   Petici�n:
+   	PUT	�/api/v1/governments/Sweden/2016?apikey=keyRob
+{"country": "Sweden", "year": "2016", "trustGovernment": "0.9999", "generosity":" 0.8888", "confidence": "7.27" }
+Respuesta: 200
+
+Actualizar una estad�stica:
+   Petici�n:
+   	PUT	� /api/v1/governments/?apikey=keyRob
+Respuesta: 405 Method Not Allowed
+Realizar b�squeda:
+   Petici�n:
+   	GET	�/api/v1/governments?apikey=keyRob&from=2016&&to=2017
+   Respuesta:
+[
+  {
+    "_id": "5c88a9e41da18800178db260",
+    "country": "Sweden",
+    "year": "2016",
+    "trustGovernment": "0.40",
+    "generosity": "0.83",
+    "confidence": "7.27"
+  },
+  {
+    "_id": "5c88a9e41da18800178db261",
+    "country": "Norway",
+    "year": "2016",
+    "trustGovernment": "0.35",
+    "generosity": "0.37",
+    "confidence": "7.42"
+  },
+  {
+    "_id": "5c88a9e41da18800178db264",
+    "country": "Portugal",
+    "year": "2017",
+    "trustGovernment": "0.02",
+    "generosity": "0.14",
+    "confidence": "5.33"
+  }
+]
+
+Borrar todos los recursos:
+
+   Petici�n:
+   	DELETE	�/api/v1/governments?apikey=keyRob
+    
+   Respuesta:
+   
+      204 No Content
+
+Borrar a un recurso concreto:
+
+   Petici�n:
+   	DELETE	�/api/v1/governments/Sweden/2016?apikey=keyRob
+    
+   Respuesta:
+   
+      204 No Content
+
+

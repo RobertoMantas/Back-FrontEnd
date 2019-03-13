@@ -25,7 +25,6 @@ angular
                 $scope.generosity.push(Number($scope.data[i].generosity));
                 $scope.trustGovernment.push(Number($scope.data[i].trustGovernment));
                 $scope.confidence.push(Number($scope.data[i].confidence));
-                $scope.year.push(Number($scope.data[i].year));
             }
         });    
             
@@ -33,7 +32,7 @@ angular
         $http.get("/api/v1/governments/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
             
             
-           Highcharts.chart('container', {
+           Highcharts.chart('container1', {
     chart: {
         type: 'areaspline'
     },

@@ -13,7 +13,7 @@ angular.module("ManagerApp", ["ngRoute"]).config(function ($routeProvider) {
         })
 
         .when("/governments/chart", {
-            templateUrl: "/frontGovernmentAPI/governmentsChartCtrl.html",
+            templateUrl: "/frontGovernmentAPI/ChartCtrl.html",
             controller: "governmentsChartCtrl"
         })
 
