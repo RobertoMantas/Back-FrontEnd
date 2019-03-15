@@ -5,101 +5,78 @@ angular
         $scope.apikey = "keyRob";
         $scope.dataco2 = {};
         $scope.dataGovern = {};
-        var dataCacheEducation = {};
-        var dataCacheWages = {};
-        $scope.categorias = [];
-        $scope.categorias1 = [];
+        var dataCacheCo2 = {};
         //team03
-        $scope.datoExterno = [];
+        $scope.datos2 = [];
+
         //Me
-        $scope.year1 = [];
-        $scope.trustGovernment = [];
-        $scope.generosity = [];
-        $scope.confidence = [];
+        $scope.governments = [];
+   
 
-      
+                
 
-//G07s
+  
+ 
+
+
+     $http.get("/api/v1/governments" + "?" + "apikey=" + $scope.apikey).then(function (response) {
+
+         dataCacheGovern = response.data;
+         $scope.dataGovern = dataCacheGovern;
+
+         for (var i = 0; i < response.data.length; i++) {
+             $scope.governments.push(Number($scope.dataGovern[i].confidence));
+         }
+        
+             $http.get("/proxy/governments").then(function(response){
                 
-     $http.get("/proxy/governments").then(function(response){
+                dataCacheCo2 = response.data;
+                $scope.dataco2 =dataCacheCo2;
                 
-                dataCacheEducation = response.data;
-                $scope.dataco2 =dataCacheEducation;
-                
-                for(var i=0; i<response.data.length; i++){
-                    $scope.datoExterno.push(Number($scope.dataco2[i]["co2-metrics-tons-per-capita"]));
+                for (var i = 0; i < $scope.dataGovern.length; i++) {
+                    $scope.datos2.push({ "confidence": $scope.governments[i], "co2Gaseous": $scope.dataco2[i]["co2-from-gaseous-fuel-consumption"] });
+
                 }
                 
-                
-              //G08
-              
-            $http.get("/api/v1/governments"+ "?" + "apikey=" + $scope.apikey).then(function(response){
-                
-                dataCacheWages = response.data;
-                $scope.dataGovern =dataCacheWages;
-                
-                for(var i=0; i<response.data.length; i++){
-                    $scope.categorias1.push($scope.dataGovern[i].country);
-                    $scope.year1.push(Number($scope.dataGovern[i]["year"]));
-                    $scope.trustGovernment.push(Number($scope.dataGovern[i]["trustGovernment"]));
-                    $scope.generosity.push(Number($scope.dataGovern[i]["generosity"]));
-                    $scope.confidence.push(Number($scope.dataGovern[i]["confidence"]));
-                }
 
+             chart = AmCharts.makeChart("apiproxy", {
+                 "type": "serial",
+                 "theme": "light",
+                 "dataProvider": $scope.datos2,
+                 "valueAxes": [{
+                     "gridColor": "#FFFFFF",
+                     "gridAlpha": 0.2,
+                     "dashLength": 0
+                 }],
+                 "gridAboveGraphs": true,
+                 "startDuration": 1,
+                 "graphs": [{
+                     "balloonText": "[[category]]: <b>[[value]]</b>",
+                     "fillAlphas": 0.8,
+                     "lineAlpha": 0.2,
+                     "type": "column",
+                     "valueField": "confidence"
+                 }],
+                 "chartCursor": {
+                     "categoryBalloonEnabled": false,
+                     "cursorAlpha": 0,
+                     "zoomable": false
+                 },
+                 "categoryField": "co2Gaseous",
+                 "categoryAxis": {
+                     "gridPosition": "start",
+                     "gridAlpha": 0,
+                     "tickPosition": "start",
+                     "tickLength": 20
+                 },
+                 "export": {
+                     "enabled": true
+                 }
 
-                    Highcharts.chart('container',{
-                        title: {
-                            text: 'Integrated Team 03 & Team 5'
-                        },
-                        chart: {
-                            type: 'line'
-                        },
-                        xAxis: {
-                            categories: $scope.categorias1
-
-                        },
-                        x2Axis: {
-                            categories: $scope.categorias
-                        },
-                        legend: {
-                            layout: 'vertical',
-                            floating: true,
-                            backgroundColor: '#FFFFFF',
-                            //align: 'left',
-                            verticalAlign: 'top',
-                            align: 'right',
-                            y: 20,
-                            x: 0
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name + '</b><br/>' +
-                                   this.x + ': ' + this.y;
-                            }
-                        },
-                        series:[{
-                            name: 'year',
-                            data: $scope.datoExterno,
-                        },
-                        
-                        
-                        {
-                            name: 'Generosity ',
-                            data: $scope.generosity
-                        },
-                        
-                        {
-                            name: 'Confidence',
-                            data: $scope.confidence
-                        },
-                        
-                        {
-                            name: 'Trust Government',
-                            data: $scope.trustGovernment
-                        }]
-                    });});
-         
+             });
+         });
      });
-               
+
+
 
 }]);

@@ -116,9 +116,7 @@ angular.module("ManagerApp").
                     Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
                     $scope.refreshBotton();
                     refresh();
-                }, function (response) {
-                    Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
-                }, function (response) {
+                },  function (response) {
                     switch (response.status) {
                         case 400:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error adding data - incorrect data was entered!!', 4000);
@@ -129,10 +127,18 @@ angular.module("ManagerApp").
                         case 403:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
                             break;
+                            case 409:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error adding data! Can not add a country with a year that already exists.', 4000);
+                            break;
+                        case 422:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error adding data! Can not add a country with missing data.', 4000);
+                            break;
                         default:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
                             break;
                     }
+                },function (response) {
+                    Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
                 });
         };
 
