@@ -174,12 +174,10 @@ function datos(){
       
      response.data.forEach(function(d){
          response.data.country=d.country;
-         response.data.year=d.year;
          response.data.trustGovernment=d.trustGovernment;
          response.data.generosity=d.generosity;
          
           ret.push({"country":response.data.country,
-          "year":response.data.year,
           "trustGovernment":response.data.trustGovernment,
           "generosity":response.data.generosity,
           });

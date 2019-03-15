@@ -127,8 +127,11 @@ angular.module("ManagerApp").
                         case 403:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
                             break;
-                        case 409:
+                            case 409:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error adding data! Can not add a country with a year that already exists.', 4000);
+                            break;
+                        case 422:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error adding data! Can not add a country with missing data.', 4000);
                             break;
                         default:
                             Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
