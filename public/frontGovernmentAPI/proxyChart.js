@@ -3,103 +3,80 @@ angular
     .controller("governmentsProxyChartCtrl",["$scope","$http",function ($scope, $http){
         
         $scope.apikey = "keyRob";
-        $scope.dataEducation = {};
-        $scope.dataWages = {};
-        var dataCacheEducation = {};
-        var dataCacheWages = {};
-        $scope.categorias = [];
-        $scope.categorias1 = [];
-        //G08
-        $scope.year = [];
-        $scope.varied = [];
-        $scope.averageWage =[];
-        //G07
-        $scope.year1 = [];
-        $scope.trustGovernment = [];
-        $scope.generosity = [];
-        $scope.confidence = [];
+        $scope.dataco2 = {};
+        $scope.dataGovern = {};
+        var dataCacheCo2 = {};
+        //team03
+        $scope.datos2 = [];
 
-      
+        //Me
+        $scope.governments = [];
+   
 
-//G07s
                 
-     $http.get("/proxy/governments").then(function(response){
+
+  
+ 
+
+
+     $http.get("/api/v1/governments" + "?" + "apikey=" + $scope.apikey).then(function (response) {
+
+         dataCacheGovern = response.data;
+         $scope.dataGovern = dataCacheGovern;
+
+         for (var i = 0; i < response.data.length; i++) {
+             $scope.governments.push(Number($scope.dataGovern[i].confidence));
+         }
+        
+             $http.get("/proxy/governments").then(function(response){
                 
-                dataCacheEducation = response.data;
-                $scope.dataEducation =dataCacheEducation;
+                dataCacheCo2 = response.data;
+                $scope.dataco2 =dataCacheCo2;
                 
-                for(var i=0; i<response.data.length; i++){
-                    $scope.categorias.push($scope.dataEducation[i].province);
-                    $scope.year.push(Number($scope.dataEducation[i].year));
-                    $scope.varied.push(Number($scope.dataEducation[i].varied));
-                    $scope.averageWage.push(Number($scope.dataEducation[i].averageWage));
+                for (var i = 0; i < $scope.dataGovern.length; i++) {
+                    $scope.datos2.push({ "confidence": $scope.governments[i], "co2Gaseous": $scope.dataco2[i]["co2-from-gaseous-fuel-consumption"] });
+
                 }
                 
-                
-              //G08
-              
-            $http.get("/api/v1/governments"+ "?" + "apikey=" + $scope.apikey).then(function(response){
-                
-                dataCacheWages = response.data;
-                $scope.dataWages =dataCacheWages;
-                
-                for(var i=0; i<response.data.length; i++){
-                    $scope.categorias1.push($scope.dataWages[i].country);
-                    $scope.year1.push(Number($scope.dataWages[i]["year"]));
-                    $scope.trustGovernment.push(Number($scope.dataWages[i]["trustGovernment"]));
-                    $scope.generosity.push(Number($scope.dataWages[i]["generosity"]));
-                    $scope.confidence.push(Number($scope.dataWages[i]["confidence"]));
-                }
 
+             chart = AmCharts.makeChart("apiproxy", {
+                 "type": "serial",
+                 "theme": "light",
+                 "dataProvider": $scope.datos2,
+                 "valueAxes": [{
+                     "gridColor": "#FFFFFF",
+                     "gridAlpha": 0.2,
+                     "dashLength": 0
+                 }],
+                 "gridAboveGraphs": true,
+                 "startDuration": 1,
+                 "graphs": [{
+                     "balloonText": "[[category]]: <b>[[value]]</b>",
+                     "fillAlphas": 0.8,
+                     "lineAlpha": 0.2,
+                     "type": "column",
+                     "valueField": "confidence"
+                 }],
+                 "chartCursor": {
+                     "categoryBalloonEnabled": false,
+                     "cursorAlpha": 0,
+                     "zoomable": false
+                 },
+                 "categoryField": "co2Gaseous",
+                 "categoryAxis": {
+                     "gridPosition": "start",
+                     "gridAlpha": 0,
+                     "tickPosition": "start",
+                     "tickLength": 20
+                 },
+                 "export": {
+                     "enabled": true
+                 }
 
-                    Highcharts.chart('container',{
-                        title: {
-                            text: 'Integrated Team 03 & G08'
-                        },
-                        chart: {
-                            type: 'line'
-                        },
-                        xAxis: {
-                            categories: $scope.categorias1
-
-                        },
-                        x2Axis: {
-                            categories: $scope.categorias
-                        },
-                        legend: {
-                            layout: 'vertical',
-                            floating: true,
-                            backgroundColor: '#FFFFFF',
-                            //align: 'left',
-                            verticalAlign: 'top',
-                            align: 'right',
-                            y: 20,
-                            x: 0
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name + '</b><br/>' +
-                                   this.x + ': ' + this.y;
-                            }
-                        },
-                        series:[{
-                            name: 'year',
-                            data: $scope.varied,
-                        },
-                        
-                        
-                        {
-                            name: 'Generosity ',
-                            data: $scope.generosity
-                        },
-                        
-                        {
-                            name: 'Trust Government',
-                            data: $scope.trustGovernment
-                        }]
-                    });});
-         
+             });
+         });
      });
-               
+
+
 
 }]);

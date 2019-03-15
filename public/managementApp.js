@@ -13,42 +13,33 @@ angular.module("ManagerApp", ["ngRoute"]).config(function ($routeProvider) {
         })
 
         .when("/governments/chart", {
-            templateUrl: "/frontGovernmentAPI/governmentsChartCtrl.html",
+            templateUrl: "/frontGovernmentAPI/ChartCtrl.html",
             controller: "governmentsChartCtrl"
         })
 
-        .when("/proxy/governments", {
+        .when("/governments/proxy", {
             templateUrl: "/frontGovernmentAPI/proxyChart.html",
             controller: "governmentsProxyChartCtrl",
         })
-        .when("/cors/governments", {
-            templateUrl: "/frontGovernmentAPI/corsCharts.html",
-            controller: "governmentsCorsChartCtrl",
-        })
         
-        .when("/governments/externalApi", {
+        .when("/governments/externalapi", {
             templateUrl: "/frontGovernmentAPI/externalApi.html",
             controller: "governmentsExternalApiChartCtrl"
         })
         
-        .when("/governments/externalApi2", {
-            templateUrl: "/frontGovernmentAPI/externalApi2.html",
-            controller: "governmentsExternalApi2ChartCtrl"
+        .when("/governments/about", {
+            templateUrl: "about.html",
         })
         
-        .when("/governments/externalApi3", {
-            templateUrl: "/frontGovernmentAPI/externalApi3.html",
-            controller: "governmentsExternalApi3ChartCtrl"
+        .when("/governments/integrations", {
+            templateUrl: "integrations.html",
         })
         
-        .when("/governments/externalApi4", {
-            templateUrl: "/frontGovernmentAPI/externalApi4.html",
-            controller: "governmentsExternalApi4ChartCtrl"
+        .when("/governments/analytics", {
+            templateUrl: "analytics.html",
         })
-        
-        .when("/governments/externalApi5", {
-            templateUrl: "/frontGovernmentAPI/externalApi5.html",
-            controller: "governmentsExternalApi5ChartCtrl"
+        .when("/governments/chartlist", {
+            templateUrl: "frontGovernmentAPI/chartlist.html",
         })
     console.log("App initialized and configured");
 });

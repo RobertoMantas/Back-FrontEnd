@@ -84,8 +84,8 @@ app.use("/proxy/governments", (req, res) => {
   console.log("INFO: New GET request to /proxy/governments/");
   var http = require('http');
   var options = {
-      host: 'sos1617-08.herokuapp.com',
-      path: '/api/v1/wages?apikey=hf5HF86KvZ'
+      host: 'dgsin1819-05.herokuapp.com',
+      path: '/api/v1/co2'
   };
 
   var request = http.request(options, (response) => {

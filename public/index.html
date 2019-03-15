@@ -1,51 +1,66 @@
 <html ng-app="ManagerApp">
 
 <head>
-        <title>DSGIN-03</title>
+    <title>DSGIN-03</title>
 
     <!-- ManagerApp -->
 
     <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
-      <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css" type="text/css" />
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-   <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="managementApp.js"></script>
     <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-          <!-- zingcharts -->
-          <script type="text/javascript" src="bower_components/zingchart/client/zingchart.min.js"></script>
-          <!-- morris -->
-      
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- zingcharts -->
+    <script type="text/javascript" src="bower_components/zingchart/client/zingchart.min.js"></script>
+    <!-- morris -->
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- amcharts -->
 
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
+        media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <!-- anychart-->
+    <script src="https://cdn.anychart.com/js/7.13.1/anychart-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.anychart.com/css/7.13.1/anychart-ui.min.css" />
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
+        media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
     <!-- Roberto -->
     <script type="text/javascript" src="frontGovernmentAPI/listCtrl.js"></script>
     <script type="text/javascript" src="frontGovernmentAPI/editCtrl.js"></script>
     <script type="text/javascript" src="frontGovernmentAPI/chartCtrl.js"></script>
     <script type="text/javascript" src="frontGovernmentAPI/proxyChart.js"></script>
-    <script type="text/javascript" src="frontGovernmentAPI/corsCharts.js"></script>
     <script type="text/javascript" src="frontGovernmentAPI/externalApi.js"></script>
-   
+
     <!-- Selu -->
     <script type="text/javascript" src="frontFamiliesAPI/listCtrl.js"></script>
     <script type="text/javascript" src="frontFamiliesAPI/editCtrl.js"></script>
     <!-- Jesús -->
     <script type="text/javascript" src="frontFamiliesAPI/listCtrl.js"></script>
     <script type="text/javascript" src="frontFamiliesAPI/editCtrl.js"></script>
-   
+
 </head>
+
 <body>
 
     <header>
-        
+
         <ul id="dropdown-menu" class="dropdown-content">
             <li><a href="#!/governments"><i class="material-icons left">list</i>Governments</a></li>
             <li><a href="#!/freedom"><i class="material-icons left">list</i>Freedom</a></li>
@@ -57,13 +72,16 @@
             <li><a href="#!/freedom/chart"><i class=""></i>Freedom</a></li>
             <li><a href="#!/families/chart"><i class=""></i>Families</a></li>
         </ul>
-        
+
         <nav>
             <div class="nav-wrapper green">
                 <a href="#!" class="brand-logo left"><i class="material-icons left">web</i>DGSIN1819-03</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-menu">Frontends<i class="material-icons right">arrow_drop_down</i></a></li>
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-menu-graphs"><i class="material-icons left"></i>View Graphs<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-menu">Frontends<i
+                                class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-menu-graphs"><i
+                                class="material-icons left"></i>View Graphs<i
+                                class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -76,6 +94,6 @@
         <div ng-view></div>
 
     </main>
-    </body>
-</html>
+</body>
 
+</html>
