@@ -122,12 +122,9 @@ app.use("/proxy/governments", (req, res) => {
 
 //------------------------------------------------Jesus--------------------------------------------------------------------------
 
-//TO DO
-/* 
-app.get("/docsroberto", (req, res) => {
-  res.redirect("https://documenter.getpostman.com/view/1779152/S11RJvKA");
+app.get("/docsjesus", (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/7001703/S17qSUdT");
 }); 
-*/
 
 var API_KEY_Jes = "keyJes";
 // Helper method to check for apikey
