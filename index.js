@@ -9,8 +9,14 @@ var cors = require('cors');
 
 const app = express();
 var BASE_API_PATH = "/api/v1";
+
+//Roberto
 const mdbURLRoberto = "mongodb+srv://admin:admin1234@clusterrobertodsign-sxkzk.mongodb.net/governmentsAPI-db?retryWrites=true";
 var dbRoberto;
+
+//Jesus
+const mdbURLJesus = "mongodb+srv://admin:admin1234@dgsin1819-03-jdiazcabe-ninmx.mongodb.net/familiesAPI-db?retryWrites=true";
+var dbJesus;
 
 app
   .get("/init", (req, res) => {
@@ -110,3 +116,77 @@ app.use("/proxy/governments", (req, res) => {
 });
 
 //------------------------------------------------Roberto--------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------Jesus--------------------------------------------------------------------------
+
+app.get("/docsjesus", (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/7001703/S17qSUdT");
+}); 
+
+var API_KEY_Jes = "keyJes";
+// Helper method to check for apikey
+var apiKeyCheck_jes = function (request, response) {
+  if (!request.query.apikey) {
+    console.error('WARNING: No apikey was sent!');
+    response.sendStatus(401);
+    return false;
+  }
+  if (request.query.apikey !== API_KEY_Jes) {
+    console.error('WARNING: Incorrect apikey was used!');
+    response.sendStatus(403);
+    return false;
+  }
+  return true;
+};
+
+MongoClient.connect(mdbURLJesus, (err, client) => {
+  if (err) {
+    console.error("DB connection error: " + err);
+    process.exit(1);
+  } else {
+    dbJesus = client.db("familiesAPI-db").collection("families");
+    dbJesus.find({}).toArray((err, family) => {
+      if (err) {
+        console.error("Error getting data from dbJesus: " + err);
+      } else if (family.length == 0) {
+        console.info("Adding initial family to empty dbJesus");
+      } else {
+        console.info("Connected to the dbJesus with " + family.length + " family");
+      }
+    });
+    familiesAPI.register(app, dbJesus, BASE_API_PATH, apiKeyCheck_jes);
+  }
+});
+
+app.use("/proxy/families", (req, res) => {
+  console.log("INFO: New GET request to /proxy/families/");
+  var http = require('http');
+  var options = {
+      host: 'dgsin1819-05.herokuapp.com',
+      path: '/api/v1/co2'
+  };
+
+  var request = http.request(options, (response) => {
+      var input = '';
+      response.on('data', function(chunk) {
+          input += chunk;
+      });
+
+      response.on('end', function() {
+          console.log("INFO: The Proxy request to /proxy/families/ worked correctly :)");
+          res.send(input);
+      });
+  });
+
+  request.on('error', function(e) {
+      console.log("WARNING: New GET request to /proxy/families/ - ERROR TRYING TO ACCESS, sending 503...");
+      res.sendStatus(503);
+  });
+  request.end();
+
+
+});
+//------------------------------------------------Jesus--------------------------------------------------------------------------
