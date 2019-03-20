@@ -128,7 +128,7 @@ app.get("/docsjesus", (req, res) => {
 
 var API_KEY_Jes = "keyJes";
 // Helper method to check for apikey
-var apiKeyCheck = function (request, response) {
+var apiKeyCheck_jes = function (request, response) {
   if (!request.query.apikey) {
     console.error('WARNING: No apikey was sent!');
     response.sendStatus(401);
@@ -157,7 +157,7 @@ MongoClient.connect(mdbURLJesus, (err, client) => {
         console.info("Connected to the dbJesus with " + family.length + " family");
       }
     });
-    familiesAPI.register(app, dbJesus, BASE_API_PATH, apiKeyCheck);
+    familiesAPI.register(app, dbJesus, BASE_API_PATH, apiKeyCheck_jes);
   }
 });
 
