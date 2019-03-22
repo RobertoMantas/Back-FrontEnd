@@ -44,7 +44,7 @@ angular.module("ManagerApp", ["ngRoute"]).config(function ($routeProvider) {
         
         .when("/families", {
             templateUrl: "frontFamiliesAPI/list.html",
-            controller: "FamiliesListCtrl"
+            controller: "FamilyListCtrl"
         })
     console.log("App initialized and configured");
 });
