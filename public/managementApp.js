@@ -41,5 +41,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function ($routeProvider) {
         .when("/governments/chartlist", {
             templateUrl: "frontGovernmentAPI/chartlist.html",
         })
+        
+        .when("/families", {
+            templateUrl: "frontFamiliesAPI/list.html",
+            controller: "FamiliesListCtrl"
+        })
     console.log("App initialized and configured");
 });

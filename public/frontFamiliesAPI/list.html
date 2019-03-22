@@ -1,0 +1,56 @@
+<div ng-controller="FamiliesListCtrl" class="container">
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <h4>Búsqueda por años</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input class="form-control" type="text" id="from" ng-model=from>
+                            <label for="from">Desde</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input class="form-control" type="text" id="to" ng-model=to>
+                            <label for="to">Hasta</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">Aplicar</a>
+        </div>
+    </div>
+
+    <div class="row" >
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Year</th>
+                    <th>Happiness Score</th>
+                    <th>Economy</th>
+                    <th>Family</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="dataUnit in data">
+                    <td>{{dataUnit.country}}</td>
+                    <td>{{dataUnit.year}}</td>
+                    <td>{{dataUnit["happinessScore"]}}</td>
+                    <td>{{dataUnit["economy"]}}</td>
+                    <td>{{dataUnit["family"]}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="center-align">
+            <button class="btn waves-effect waves blue" ng-click="refreshBotton()"><i class="material-icons left"></i>Refrescar</button>
+        </div>
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large blue" onClick="$('#searchModal').modal('open');">
+            <i class="large material-icons">search</i>
+        </a>
+    </div>
+</div>
