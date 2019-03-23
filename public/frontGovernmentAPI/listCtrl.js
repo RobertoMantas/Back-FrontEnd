@@ -9,7 +9,7 @@ angular.module("ManagerApp").
     controller("GovernmentListCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {
         console.log("Government ListCtrl initialized");
 
-        if (!$rootScope.apikey) $rootScope.apikey = "keyRob";
+        $rootScope.apikey = "keyRob";
 
         $scope.search = {};
         $scope.searchAdd = {};

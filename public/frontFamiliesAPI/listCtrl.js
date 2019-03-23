@@ -1,9 +1,9 @@
 
 angular.module("ManagerApp").
-    controller("FamilyListCtrl", ["$scope_jes", "$http", "$rootScope", function ($scope, $http, $rootScope) {
+    controller("FamilyListCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {
         console.log("Family ListCtrl initialized");
 
-        if (!$rootScope.apikey) $rootScope.apikey = "keyJes";
+        $rootScope.apikey = "keyJes";
 
         $scope.data = {};
         var dataCache = {};
