@@ -1,9 +1,3 @@
-/* global angular */
-/* global M */
-/* global $ */
-var previousPage;
-var nextPage;
-var setPage;
 
 angular.module("ManagerApp").
     controller("FamilyListCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {
@@ -12,63 +6,17 @@ angular.module("ManagerApp").
         if (!$rootScope.apikey) $rootScope.apikey = "keyJes";
 
         $scope.search = {};
-        $scope.searchAdd = {};
         $scope.data = {};
-        $scope.currentPage = 1;
-        $scope.maxPages = 1;
-        $scope.pages = [];
-        $scope.pagesLeft = [];
-        $scope.pagesMid = [];
-        $scope.pagesRight = [];
 
         var dataCache = {};
         var modifier = "";
         var properties = "";
-        var elementsPerPage = 2;
-
-        $scope.previousPage = function () {
-            var a;
-            console.log("offset antes-: " + $scope.currentPage);
-            a = (($scope.currentPage - 1) * 2) - 2;
-            console.log("offset despues-: " + a);
-            $http
-                .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&limit=2&offset=" + a)
-                .then(function (response) {
-                    properties = "limit=2&offset=" + a;
-                    $scope.currentPage--;
-                    $scope.refreshPage();
-                    refresh();
-
-                });
-        };
-
-        $scope.nextPage = function () {
-            var a;
-            console.log("offset antes+: " + $scope.currentPage);
-            a = (($scope.currentPage + 1) * 2) - 2;
-            console.log("offset despues +: " + a);
-            $http
-                .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&limit=2&offset=" + a)
-                .then(function (response) {
-                    properties = "limit=2&offset=" + a;
-                    $scope.currentPage++;
-                    $scope.refreshPage();
-                    refresh();
-                });
-        };
 
         $scope.refreshPage = function () {
-
-            if ($scope.currentPage <= 0) $scope.currentPage = 1;
-            if ($scope.currentPage > $scope.maxPages) $scope.currentPage = $scope.maxPages;
             $scope.data = dataCache;
-            console.log("Página actual: " + $scope.currentPage);
-            console.log("Máximo de páginas: " + $scope.maxPages);
         };
 
         $scope.refreshBotton = function () {
-            $scope.maxPages = 1;
-            $scope.currentPage = 1;
             properties = "";
             refresh();
         };
@@ -77,8 +25,6 @@ angular.module("ManagerApp").
             $http
                 .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                 .then(function (response) {
-                    if ($scope.maxPages < Math.max(response.data.length / elementsPerPage))
-                        $scope.maxPages = Math.ceil(response.data.length / elementsPerPage);
                     dataCache = response.data;
                     $scope.refreshPage();
                 }, function (response) {
@@ -90,7 +36,6 @@ angular.module("ManagerApp").
                             Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey errónea', 4000);
                             break;
                         case 404:
-                            $scope.maxPages = 1;
                             dataCache = {};
                             $scope.refreshPage();
                             Materialize.toast('<i class="material-icons">error_outline</i> Error - No hay datos', 4000);
@@ -109,8 +54,6 @@ angular.module("ManagerApp").
                     console.log("Eliminando datos...");
                     Materialize.toast('<i class="material-icons">done</i> Datos eliminados', 4000);
                     properties = "";
-                    $scope.maxPages = 1;
-                    $scope.currentPage = 1;
                     refresh();
                 }, function (response) {
                     Materialize.toast('<i class="material-icons">error_outline</i> Se ha producido un eror al eliminar los datos', 4000);
@@ -146,11 +89,9 @@ angular.module("ManagerApp").
                     .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                     .then(function (response) {
                         Materialize.toast('<i class="material-icons">done</i> Apikey cambiada', 4000);
-                        $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
                         dataCache = response.data;
                         $scope.refreshPage();
                     }, function (response) {
-                        $scope.maxPages = 1;
                         dataCache = {};
                         $scope.refreshPage();
                         switch (response.status) {
