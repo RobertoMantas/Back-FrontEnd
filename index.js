@@ -161,6 +161,7 @@ MongoClient.connect(mdbURLJesus, (err, client) => {
   }
 });
 
+//Conexión a API externa
 app.use("/proxy/families", (req, res) => {
   console.log("INFO: New GET request to /proxy/families/");
   var http = require('http');
