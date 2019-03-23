@@ -31,7 +31,7 @@ angular.module("ManagerApp").
                             Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey perdida', 4000);
                             break;
                         case 403:
-                            Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey actualizada', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey no corresponde', 4000);
                             break;
                         case 404:
                             dataCache = {};
@@ -54,7 +54,7 @@ angular.module("ManagerApp").
                     properties = "";
                     refresh();
                 }, function (response) {
-                    Materialize.toast('<i class="material-icons">error_outline</i> Se ha producido un eror al eliminar los datos', 4000);
+                    Materialize.toast('<i class="material-icons">error_outline</i> Se ha producido un error al eliminar los datos', 4000);
                 });
         };
 
