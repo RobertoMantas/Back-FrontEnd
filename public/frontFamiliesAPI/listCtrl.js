@@ -1,9 +1,9 @@
 
 angular.module("ManagerApp").
-    controller("FamilyListCtrl", ["$scope", "$http", "$rootScope_jes", function ($scope, $http, $rootScope_jes) {
+    controller("FamilyListCtrl", ["$scope_jes", "$http", "$rootScope", function ($scope, $http, $rootScope) {
         console.log("Family ListCtrl initialized");
 
-        if (!$rootScope_jes.apikey) $rootScope_jes.apikey = "keyJes";
+        if (!$rootScope.apikey) $rootScope.apikey = "keyJes";
 
         $scope.data = {};
         var dataCache = {};
@@ -21,7 +21,7 @@ angular.module("ManagerApp").
 
         var refresh = $scope.refresh = function () {
             $http
-                .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope_jes.apikey + "&" + properties)
+                .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                 .then(function (response) {
                     dataCache = response.data;
                     $scope.refreshPage();
@@ -47,7 +47,7 @@ angular.module("ManagerApp").
 
         $scope.delAllData = function () {
             $http
-                .delete("../api/v1/families" + "?" + "apikey=" + $rootScope_jes.apikey)
+                .delete("../api/v1/families" + "?" + "apikey=" + $rootScope.apikey)
                 .then(function (response) {
                     console.log("Eliminando datos...");
                     Materialize.toast('<i class="material-icons">done</i> Datos eliminados', 4000);
@@ -62,7 +62,7 @@ angular.module("ManagerApp").
             refresh();
             if ($scope.data.length == 0) {
                 $http
-                    .get("../api/v1/families/loadInitialData" + "?" + "apikey=" + $rootScope_jes.apikey)
+                    .get("../api/v1/families/loadInitialData" + "?" + "apikey=" + $rootScope.apikey)
                     .then(function (response) {
                         console.log("Cargando datos iniciales...");
                         Materialize.toast('<i class="material-icons">done</i> Datos iniciales cargados', 4000);
@@ -81,10 +81,9 @@ angular.module("ManagerApp").
 
         $('#apikeyModal').modal({
             complete: function () {
-                $rootScope_jes.apikey = $scope.apikey;
-
+                $rootScope.apikey = $scope.apikey;
                 $http
-                    .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope_jes.apikey + "&" + properties)
+                    .get("../api/v1/families" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                     .then(function (response) {
                         Materialize.toast('<i class="material-icons">done</i> Apikey cambiada', 4000);
                         dataCache = response.data;
