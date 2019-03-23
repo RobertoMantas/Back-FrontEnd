@@ -76,9 +76,7 @@ angular.module("ManagerApp").
                 console.log("La lista debe estar vacía...");
             }
         };
-
-        refresh();
-
+        
         $('#apikeyModal').modal({
             complete: function () {
                 $rootScope.apikey = $scope.apikey;
