@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">OK</a>
+                <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">Aplicar</a>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">Guardar</a>
+                <a href="" class="modal-action modal-close waves-effect waves-blue btn-flat">Aplicar</a>
             </div>
         </div>
 
@@ -67,13 +67,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><input class="form-control" ng-model="newData.country" /></td>
-                        <td><input class="form-control" ng-model="newData.year" /></td>
-                        <td><input class="form-control" ng-model="newData['happinessScore']" /></td>
-                        <td><input class="form-control" ng-model="newData['economy']" /></td>
-                        <td><input class="form-control" ng-model="newData['family']" /></td>
-                    </tr>
                     <tr ng-repeat="dataUnit in data">
                         <td>{{dataUnit.country}}</td>
                         <td>{{dataUnit.year}}</td>
