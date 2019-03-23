@@ -5,9 +5,7 @@ angular.module("ManagerApp").
 
         if (!$rootScope.apikey) $rootScope.apikey = "keyJes";
 
-        $scope.search = {};
         $scope.data = {};
-
         var dataCache = {};
         var modifier = "";
         var properties = "";
@@ -33,7 +31,7 @@ angular.module("ManagerApp").
                             Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey perdida', 4000);
                             break;
                         case 403:
-                            Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey errónea', 4000);
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey actualizada', 4000);
                             break;
                         case 404:
                             dataCache = {};
@@ -99,7 +97,7 @@ angular.module("ManagerApp").
                                 Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey perdida', 4000);
                                 break;
                             case 403:
-                                Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey errónea', 4000);
+                                Materialize.toast('<i class="material-icons">error_outline</i> Error - Apikey errónea para este FrontEnd', 4000);
                                 break;
                             default:
                                 Materialize.toast('<i class="material-icons">error_outline</i> Error al cargar', 4000);
