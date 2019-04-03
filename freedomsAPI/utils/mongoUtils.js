@@ -1,40 +1,23 @@
 const mongoClient = require("mongodb").MongoClient;
-const familiesAPIConst = require("./constants");
-let _familiesDB;
-let _familiesCollection;
+const freedomsConst = require("./constants");
+let _freedomsCollection;
 
 const asyncConnectDB = async _ => {
     try {
         let server = await mongoClient
-            .connect(familiesAPIConst.mongodbURL, {
+            .connect(freedomsConst.mongodbURL, {
                 useNewUrlParser: true
             });
-        _familiesDB = await server.db(familiesAPIConst.mongoFamiliesApiDb);
+        _freedomsCollection = server.db(freedomsConst.mongoFreedomsDb).collection(freedomsConst.freedomsCollection);
         console.log(`familiesAPI-db connection: OK`);
-
-        _familiesCollection = await getCollection(familiesAPIConst.familiesCollection);
-        console.log("Noup");
-
-    } catch (e) {
-        console.log(`familiesAPI-db connection: ERROR`);
-        console.log(e.stack);
-    }
-};
-
-const getCollection = async collectionName => {
-    try {
-        console.log(`Connect to collection ${collectionName}: OK`);
-        return _familiesDB.collection(collectionName);
-
     } catch (error) {
-        console.log(`SConnect to collection ${collectionName}: ERROR`);
-        console.log(error.stack);
+        throw error.stack;
     }
-};
+}
 
-const getFamilliesCollection = _ => _familiesCollection;
+const getFreedomsCollection = _ => _freedomsCollection;
 
 module.exports = {
     configDB: asyncConnectDB,
-    familiesCollection: getFamilliesCollection
+    freedomsCollection: getFreedomsCollection
 };
