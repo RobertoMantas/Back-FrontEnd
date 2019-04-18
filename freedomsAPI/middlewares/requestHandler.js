@@ -34,12 +34,7 @@ const pathVariablesHandler =
         params: parameters = {}
     }, res, next) => {
         res.locals.filterData.data = {
-            ...(parameters.country && {
-                country: parameters.country
-            }),
-            ...(parameters.year && {
-                year: parameters.year
-            }),
+            ...parameters,
             ...res.locals.filterData.data
         }
 
