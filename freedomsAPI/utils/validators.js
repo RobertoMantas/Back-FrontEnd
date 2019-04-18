@@ -2,22 +2,22 @@ const HttpStatus = require('http-status-codes');
 const ClientError = require("./clientError");
 
 const {
-    check,
     query,
+    param,
     validationResult,
     oneOf
 } = require('express-validator/check');
 
 
 const paginationValidate = [
-    check('limit')
+    query('limit')
     .optional()
     .isInt({
         min: 1
     })
     .toInt(),
 
-    check('offset')
+    query('offset')
     .optional()
     .isInt({
         min: 1
@@ -50,18 +50,34 @@ const fromToValidate = oneOf([
             req
         }) => req.query.from <= value)
     ]
-], "Invalid from-to params")
+], "Invalid from-to params");
 
-const validationHandler = req => {
+const yearValidate = [
+    param('year')
+    .isInt({
+        min: 1
+    })
+    .toInt()
+];
+
+const countryValidate = [
+    param('country')
+    .isString()
+    .not()
+    .isEmpty()
+];
+const validationHandler = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        throw new ClientError("Validation KO", errors.array().map(err => err.msg), HttpStatus.BAD_REQUEST);
+        next(new ClientError("Validation KO", errors.array().map(err => err.msg), HttpStatus.BAD_REQUEST));
     }
-}
+    next();
+};
+
 
 module.exports = {
-    paginationValidate,
-    fromToValidate,
     commonValidators: [paginationValidate, fromToValidate],
+    yearValidate,
+    countryValidate,
     validationHandler
-}
+};
