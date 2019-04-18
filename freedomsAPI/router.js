@@ -6,11 +6,11 @@ const {
     yearValidate,
     countryValidate,
     validationHandler
-} = require("./utils/validators");
+} = require("./middlewares/validators");
 const {
     queryParametersHandler,
     pathVariablesHandler
-} = require("./utils/requestHandler")
+} = require("./middlewares/requestHandler")
 
 // Interceptor
 router.use(commonValidators, validationHandler, queryParametersHandler);
