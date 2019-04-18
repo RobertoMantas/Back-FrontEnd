@@ -12,12 +12,17 @@ const {
 } = require("./middlewares/requestHandler");
 
 const {
-    getResponseHandler
+    getResponseHandler,
+    methodNotAllowedHandler,
+    errorResponseHandler
 } = require("./middlewares/responseHandler");
 
 router.use(commonValidators);
 
-router.get('', validationHandler, requestQueryHandler, getResponseHandler);
+router.route('')
+    .get(validationHandler, requestQueryHandler, getResponseHandler)
+    .all(methodNotAllowedHandler);
+//router.get('', );
 
 router.get('/:country/:year', countryValidate, yearValidate, validationHandler, requestHandler, getResponseHandler);
 
@@ -28,10 +33,7 @@ router.use((_req, _res, next) => {
 
 router.get('/:country', countryValidate, requestHandler, getResponseHandler);
 
-router.use((err, _req, res, _next) => {
-    console.error(err.stack);
-    res.status(err.status || 500).send(err.clientMessage || "Internal Server Error");
-});
+router.use(errorResponseHandler);
 
 module.exports = {
     freedomsRouter: router
