@@ -1,39 +1,51 @@
-const queryParametersHandler = req => {
-    let filterYearResult = {};
+const queryParametersHandler =
+    ({
+        query: parameters = {}
+    }, res, next) => {
 
-    if (req.from != null)
-        filterYearResult = {
-            "year": {
-                $gte: req.from,
-                $lte: req.to
-            }
+        const filterYearResult = {
+            ...(parameters.from && {
+                year: {
+                    $gte: parameters.from,
+                    $lte: parameters.to
+                }
+            })
+        }
+
+        const filterPaginationResult = {
+            ...(parameters.limit && {
+                limit: parameters.limit
+            }),
+            ...(parameters.offset && {
+                skip: parameters.offset
+            })
         };
 
-    let fields = ['limit', 'offset', 'pepe'];
-    let object = {};
-    ({
-        [fields[0]]: object[[fields[0]]],
-        [fields[1]]: object[[fields[1]]],
-        [fields[2]]: object[[fields[2]]]
-    } = req);
+        res.locals.filterData = {
+            data: filterYearResult,
+            options: filterPaginationResult,
+        };
 
-    let filterPaginationResult = {}
-    if (req.limit != null) {
-        filterPaginationResult.limit = req.limit;
-    }
-
-    if (req.offset != null) {
-        filterPaginationResult.skip = req.offset;
-    }
-
-    return {
-        ...result
-    } = {
-        filterYearResult,
-        filterPaginationResult,
+        next();
     };
-};
 
+const pathVariablesHandler =
+    ({
+        params: parameters = {}
+    }, res, next) => {
+        res.locals.filterData.data = {
+            ...(parameters.country && {
+                country: parameters.country
+            }),
+            ...(parameters.year && {
+                year: parameters.year
+            }),
+            ...res.locals.filterData.data
+        }
+
+        next();
+    }
 module.exports = {
-    queryParametersHandler: queryParametersHandler
+    queryParametersHandler,
+    pathVariablesHandler
 };
