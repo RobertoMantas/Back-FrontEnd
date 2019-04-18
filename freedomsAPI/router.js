@@ -3,54 +3,49 @@ const router = express.Router();
 const freedomsCol = require("./models/freedoms");
 const {
     commonValidators,
+    yearValidate,
+    countryValidate,
     validationHandler
 } = require("./utils/validators");
 const {
-    queryParametersHandler
+    queryParametersHandler,
+    pathVariablesHandler
 } = require("./utils/requestHandler")
 
 // Interceptor
-router.use(commonValidators, (req, res, next) => {
+router.use(commonValidators, validationHandler, queryParametersHandler);
+
+
+router.get('', async (_req, res, next) => {
     try {
-        validationHandler(req, next);
-        res.locals.filterData = queryParametersHandler(req.query);
-        console.log("Interceptor");
-        next();
-    } catch (error) {
-        next(error);
-    }
-
-});
-
-/*router.get('', function (req, res) {
-    res.send('get Page');
-});*/
-
-router.get('', async (req, res, next) => {
-    try {
-        let {
-            filterYearResult: data,
-            filterPaginationResult: options
-        } =
-        res.locals.filterData;
-
-        res.send(await freedomsCol.get(data, options));
-
+        res.send(await freedomsCol.get(res.locals.filterData));
     } catch (error) {
         next(error);
     }
 });
 
-router.use((req, res, next) => {
+router.get('/:country/:year', countryValidate, yearValidate, validationHandler, pathVariablesHandler, async (_req, res, next) => {
+    try {
+        res.send(await freedomsCol.get(res.locals.filterData));
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.use((_req, _res, next) => {
     console.log("Interceptor 2");
     next();
 });
-router.get('/:year', function (req, res) {
-    console.log("yaear");
-    res.send(`get Page: year ${req.params.year}`);
+
+router.get('/:country', countryValidate, pathVariablesHandler, async (_req, res, next) => {
+    try {
+        res.send(await freedomsCol.get(res.locals.filterData));
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.use(function (err, req, res, next) {
+router.use((err, _req, res, _next) => {
     console.error(err.stack);
     res.status(err.status || 500).send(err.clientMessage || "Internal Server Error");
 });
