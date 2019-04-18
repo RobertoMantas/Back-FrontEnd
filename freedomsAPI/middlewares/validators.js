@@ -35,10 +35,10 @@ const fromToValidate = oneOf([
         })
         .toInt()
         .custom((value, {
-                req
-            }) =>
-            req.query.to >= value
-        ),
+            req: {
+                query: params
+            }
+        }) => params.to >= value),
 
         query('to')
         .optional()
@@ -47,8 +47,10 @@ const fromToValidate = oneOf([
         })
         .toInt()
         .custom((value, {
-            req
-        }) => req.query.from <= value)
+            req: {
+                query: params
+            }
+        }) => params.from <= value)
     ]
 ], "Invalid from-to params");
 
@@ -66,14 +68,13 @@ const countryValidate = [
     .not()
     .isEmpty()
 ];
-const validationHandler = (req, res, next) => {
+const validationHandler = (req, _res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         next(new ClientError("Validation KO", errors.array().map(err => err.msg), HttpStatus.BAD_REQUEST));
     }
     next();
 };
-
 
 module.exports = {
     commonValidators: [paginationValidate, fromToValidate],
