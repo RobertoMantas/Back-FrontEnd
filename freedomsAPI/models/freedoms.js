@@ -64,34 +64,43 @@ const saveDB = async data => {
     }
 };
 
-const deleteDB = async data => {
-    try {
-        const result = await freedomsCollection().deleteMany(data);
-        console.log(`Remove OK: ${result.deletedCount}`);
-    } catch (error) {
-        throw error.stack;
-    }
-};
+const deleteDB =
+    async data => {
+        try {
+            const result = await freedomsCollection().deleteMany(data);
+            console.log(`Remove OK: ${result.deletedCount}`);
+        } catch (error) {
+            throw error.stack;
+        }
+    };
 
-const getDB = async (data, options = {}) => {
-    try {
-        const result = await freedomsCollection().find(data, options).toArray();
-        console.log(`GET OK: ${result.length}`);
-        return result;
-    } catch (error) {
-        throw error.stack;
-    }
-};
+const getDB =
+    async ({
+        data = {},
+        options = {}
+    }) => {
+        try {
+            const result = await freedomsCollection().find(data, options).toArray();
+            console.log(`GET OK: ${result.length}`);
+            return result;
+        } catch (error) {
+            throw error.stack;
+        }
+    };
 
-const putDB = async (data, options = {}) => {
-    try {
-        const result = await freedomsCollection().find(data, options).toArray();
-        console.log(`GET OK: ${result.length}`);
-        return result;
-    } catch (error) {
-        throw error.stack;
-    }
-};
+const putDB =
+    async ({
+        data = {},
+        options = {}
+    }) => {
+        try {
+            const result = await freedomsCollection().find(data, options).toArray();
+            console.log(`GET OK: ${result.length}`);
+            return result;
+        } catch (error) {
+            throw error.stack;
+        }
+    };
 
 module.exports = {
     init: initDB,
