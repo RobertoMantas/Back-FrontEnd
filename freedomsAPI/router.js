@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const freedomsCol = require("./models/freedoms");
 const {
     commonValidators,
     yearValidate,
@@ -8,42 +7,26 @@ const {
     validationHandler
 } = require("./middlewares/validators");
 const {
-    queryParametersHandler,
-    pathVariablesHandler
-} = require("./middlewares/requestHandler")
+    requestQueryHandler,
+    requestHandler
+} = require("./middlewares/requestHandler");
 
-// Interceptor
-router.use(commonValidators, validationHandler, queryParametersHandler);
+const {
+    getResponseHandler
+} = require("./middlewares/responseHandler");
 
+router.use(commonValidators);
 
-router.get('', async (_req, res, next) => {
-    try {
-        res.send(await freedomsCol.get(res.locals.filterData));
-    } catch (error) {
-        next(error);
-    }
-});
+router.get('', validationHandler, requestQueryHandler, getResponseHandler);
 
-router.get('/:country/:year', countryValidate, yearValidate, validationHandler, pathVariablesHandler, async (_req, res, next) => {
-    try {
-        res.send(await freedomsCol.get(res.locals.filterData));
-    } catch (error) {
-        next(error);
-    }
-});
+router.get('/:country/:year', countryValidate, yearValidate, validationHandler, requestHandler, getResponseHandler);
 
 router.use((_req, _res, next) => {
     console.log("Interceptor 2");
     next();
 });
 
-router.get('/:country', countryValidate, pathVariablesHandler, async (_req, res, next) => {
-    try {
-        res.send(await freedomsCol.get(res.locals.filterData));
-    } catch (error) {
-        next(error);
-    }
-});
+router.get('/:country', countryValidate, requestHandler, getResponseHandler);
 
 router.use((err, _req, res, _next) => {
     console.error(err.stack);
