@@ -1,4 +1,4 @@
-const queryParametersHandler =
+const requestQueryHandler =
     ({
         query: parameters = {}
     }, res, next) => {
@@ -10,7 +10,7 @@ const queryParametersHandler =
                     $lte: parameters.to
                 }
             })
-        }
+        };
 
         const filterPaginationResult = {
             ...(parameters.limit && {
@@ -29,7 +29,7 @@ const queryParametersHandler =
         next();
     };
 
-const pathVariablesHandler =
+const requestParamsHandler =
     ({
         params: parameters = {}
     }, res, next) => {
@@ -39,8 +39,8 @@ const pathVariablesHandler =
         }
 
         next();
-    }
+    };
 module.exports = {
-    queryParametersHandler,
-    pathVariablesHandler
+    requestQueryHandler,
+    requestHandler: [requestQueryHandler, requestParamsHandler]
 };
