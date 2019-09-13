@@ -5,7 +5,7 @@ function formatear(families) {
       return f;
   });
 }
-module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
+module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck_jes) {
 
   console.log("FAMILIES API");
 
@@ -66,7 +66,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
 
   // Paginación y búsqueda
   app.get(BASE_API_PATH + "/families", function (request, response) {
-      if (!apiKeyCheck(request, response)) return;
+      if (!apiKeyCheck_jes(request, response)) return;
 
       console.log("Nueva solicitud a datos de familias");
 
@@ -175,7 +175,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
 
   //PUT sobre colección
   app.put(BASE_API_PATH + "/families", function (request, response) {
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           console.log("ERROR: put a /families...");
           response.sendStatus(405);
       }
@@ -187,7 +187,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
       var country = request.params.country;
       var year = request.params.year;
 
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           if (!registro) {
               console.log("ERROR: put a /families/ sin información...");
               response.sendStatus(400);
@@ -220,7 +220,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
   app.get(BASE_API_PATH + "/families/:year", function (request, response) {
       var year = request.params.year;
       var country = request.params.year;
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           if (isNaN(request.params.year.charAt(0))) {
               if (!country) {
                   console.log("Error: GET a /families/:country sin especificar país...");
@@ -270,7 +270,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
   app.get(BASE_API_PATH + "/families/:country/:year", function (request, response) {
       var country = request.params.country;
       var year = request.params.year;
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           if (!country || !year) {
               console.log("ERROR: GET a /families/:country sin especificar país o año...");
               response.sendStatus(400);
@@ -297,7 +297,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
   //DELETE sobre una colección
   app.delete(BASE_API_PATH + "/families", function (request, response) {
       console.log("DELETE a /families");
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           dbJesus.remove({}, { multi: true }, function (err, result) {
               var contador = JSON.parse(result);
               if (err) {
@@ -322,7 +322,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
       var country = request.params.country;
       var year = request.params.year;
 
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           if (!country || !year) {
               console.log("ERROR: delete a /families/:country/:year sin especificar país ni año");
                response.sendStatus(400);
@@ -351,7 +351,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
   //POST sobre la colección 
   app.post(BASE_API_PATH + "/families", function (request, response) {
       var coleccion = request.body;
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           if (!coleccion) {
               console.log("ERROR: POST a /families/ sin información...");
               response.sendStatus(400); // bad request
@@ -387,7 +387,7 @@ module.exports.register = function (app, dbJesus, BASE_API_PATH, apiKeyCheck) {
   //POST sobre un solo registro
   app.post(BASE_API_PATH + "/families/:country", function (request, response) {
       var country = request.params.country;
-      if (apiKeyCheck(request, response) == true) {
+      if (apiKeyCheck_jes(request, response) == true) {
           console.log("ERROR: POST a /families/" + country + "...");
           response.sendStatus(405);
       }
