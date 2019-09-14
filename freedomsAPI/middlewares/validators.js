@@ -1,5 +1,5 @@
 const HttpStatus = require('http-status-codes');
-const ClientError = require("../utils/ClientError");
+const ClientError = require("../utils/clientError");
 
 const {
     query,
