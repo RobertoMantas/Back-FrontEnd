@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="section">
+        <div ng-hide="alertCheck" class="alert" ng-class="alertClass" role="alert">
+            {{alertMsg}}
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="input-field">
+            <input placeholder="Country" id="country" ng-model="data.country" type="text" class="validate">
+            <label for="country">Country</label>
+        </div>
+        <div class="input-field">
+            <input placeholder="Year" id="year" ng-model="data.year" type="text" class="validate">
+            <label for="year">Year</label>
+        </div>
+        <div class="input-field">
+            <input placeholder="Health Score" id="hScore" ng-model="data.hScore" type="text" class="validate">
+            <label for="hScore">Health Score</label>
+        </div>
+        <div class="input-field">
+            <input placeholder="Health Rank" id="hRank" ng-model="data.hRank" type="text" class="validate">
+            <label for="hRank">Health Rank</label>
+        </div>
+        <div class="input-field">
+            <input placeholder="Freedom" id="freedom" ng-model="data.freedom" type="text" class="validate">
+            <label for="freedom">Freedom</label>
+        </div>
+        <div class="align center">
+            <a class="btn waves-effect waves-light" href="#!/freedoms">
+                Volver <i class="material-icons right">keyboard_return</i>
+            </a>
+            <button class="btn waves-effect waves-light" ng-click="submit()" name="action"> {{btnMsg}}
+                <i class="material-icons right">add_circle</i>
+            </button>
+        </div>
+    </div>
+</div>

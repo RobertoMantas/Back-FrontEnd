@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="section">
+        <div ng-hide="alertCheck" class="alert" ng-class="alertClass" role="alert">
+            {{alertMsg}}
+        </div>
+    </div>
+
+    <div class="section row">
+        <div class="col s3 input-field">
+            <input placeholder="Country" id="country" ng-model="contryFilter" type="text" class="validate">
+            <label for="country">Country</label>
+        </div>
+        <div class="col s3 input-field">
+            <input placeholder="From year" id="country" ng-model="fromFilter" type="text" class="validate">
+            <label for="country">From year</label>
+        </div>
+        <div class="col s3 input-field">
+            <input placeholder="To year" id="country" ng-model="toFilter" type="text" class="validate">
+            <label for="country">To year</label>
+        </div>
+        <div class="col s3">
+            <button class="btn waves-effect waves-light" ng-click="loadData(0)" name="action"> Search
+                <i class="material-icons right">search</i>
+            </button>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Health Rank</th>
+                <th scope="col">Year</th>
+                <th scope="col">Country</th>
+                <th scope="col">Health Score</th>
+                <th scope="col">Freedom</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="data in freedomData">
+                <td scope="row">{{data.hRank}}</td>
+                <td>{{data.year}}</td>
+                <td>{{data.country}}</td>
+                <td>{{data.hScore}}</td>
+                <td>{{data.freedom}}</td>
+                <td>
+                    <button class="btn waves-effect waves-light" ng-click="delete(data)" name="action">Delete
+                        <i class="material-icons right">delete_forever</i>
+                    </button>
+                    <a class="btn waves-effect waves-light" ng-href="#!/freedoms/{{data.country}}/{{data.year}}">
+                        Edit <i class="material-icons right">edit</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="align center" colspan="2">
+                    <button class="btn" ng-click="loadData(-1)"><i class="small material-icons">keyboard_arrow_left</i>
+                    </button>
+                </td>
+                <td class="align center" colspan="3" scope="row">
+                    <b>{{currentPage+1}}</h6>
+                </td>
+                <td class="align center" colspan="2">
+                    <button ng-click="loadData(1)" class="btn"><i class="small material-icons">keyboard_arrow_right</i>
+                    </button>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="divider"></div>
+    <div class="section align center">
+        <a class="btn waves-effect waves-light" ng-href="#!/freedoms/new">
+            Nuevo <i class="material-icons right">add_circle</i>
+        </a>
+    </div>
+</div>

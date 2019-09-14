@@ -25,7 +25,7 @@ app
   .on("error", _ => console.log("Error: Al levantar servidor"));
 
 familiesAPI.register(app);
-freedomsAPI.register(app);
+freedomsAPI.register(app, BASE_API_PATH);
 
 
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -39,6 +39,9 @@ app.listen(process.env.PORT || 8089, () => {
 });
 
 
+app.get("/docsjlgarcia", (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/7297892/SVmsX1sM?version=latest");
+});
 
 //------------------------------------------------Roberto--------------------------------------------------------------------------
 
@@ -81,7 +84,7 @@ MongoClient.connect(mdbURLRoberto, (err, client) => {
     //var governmentsAPI = require("./governmentsAPI");
 
     governmentsAPI.register(app, dbRoberto, BASE_API_PATH, apiKeyCheck);
-    
+
   }
 });
 
@@ -90,25 +93,25 @@ app.use("/proxy/governments", (req, res) => {
   console.log("INFO: New GET request to /proxy/governments/");
   var http = require('http');
   var options = {
-      host: 'dgsin1819-05.herokuapp.com',
-      path: '/api/v1/co2'
+    host: 'dgsin1819-05.herokuapp.com',
+    path: '/api/v1/co2'
   };
 
   var request = http.request(options, (response) => {
-      var input = '';
-      response.on('data', function(chunk) {
-          input += chunk;
-      });
+    var input = '';
+    response.on('data', function (chunk) {
+      input += chunk;
+    });
 
-      response.on('end', function() {
-          console.log("INFO: The Proxy request to /proxy/governments/ worked correctly :)");
-          res.send(input);
-      });
+    response.on('end', function () {
+      console.log("INFO: The Proxy request to /proxy/governments/ worked correctly :)");
+      res.send(input);
+    });
   });
 
-  request.on('error', function(e) {
-      console.log("WARNING: New GET request to /proxy/governments/ - ERROR TRYING TO ACCESS, sending 503...");
-      res.sendStatus(503);
+  request.on('error', function (e) {
+    console.log("WARNING: New GET request to /proxy/governments/ - ERROR TRYING TO ACCESS, sending 503...");
+    res.sendStatus(503);
   });
   request.end();
 
@@ -124,7 +127,7 @@ app.use("/proxy/governments", (req, res) => {
 
 app.get("/docsjesus", (req, res) => {
   res.redirect("https://documenter.getpostman.com/view/7001703/S17qSUdT");
-}); 
+});
 
 var API_KEY_Jes = "keyJes";
 // Helper method to check for apikey
@@ -166,25 +169,25 @@ app.use("/proxy/families", (req, res) => {
   console.log("INFO: New GET request to /proxy/families/");
   var http = require('http');
   var options = {
-      host: 'dgsin1819-05.herokuapp.com',
-      path: '/api/v1/co2'
+    host: 'dgsin1819-05.herokuapp.com',
+    path: '/api/v1/co2'
   };
 
   var request = http.request(options, (response) => {
-      var input = '';
-      response.on('data', function(chunk) {
-          input += chunk;
-      });
+    var input = '';
+    response.on('data', function (chunk) {
+      input += chunk;
+    });
 
-      response.on('end', function() {
-          console.log("INFO: The Proxy request to /proxy/families/ worked correctly :)");
-          res.send(input);
-      });
+    response.on('end', function () {
+      console.log("INFO: The Proxy request to /proxy/families/ worked correctly :)");
+      res.send(input);
+    });
   });
 
-  request.on('error', function(e) {
-      console.log("WARNING: New GET request to /proxy/families/ - ERROR TRYING TO ACCESS, sending 503...");
-      res.sendStatus(503);
+  request.on('error', function (e) {
+    console.log("WARNING: New GET request to /proxy/families/ - ERROR TRYING TO ACCESS, sending 503...");
+    res.sendStatus(503);
   });
   request.end();
 
