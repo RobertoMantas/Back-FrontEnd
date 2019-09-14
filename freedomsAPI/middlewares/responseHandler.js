@@ -1,6 +1,6 @@
 const freedomsCol = require("../models/freedoms");
 const HttpStatus = require('http-status-codes');
-const ClientError = require("../utils/ClientError");
+const ClientError = require("../utils/cClientError");
 
 const loadInitDataResponseHandler = async (_req, res, next) => {
     try {
