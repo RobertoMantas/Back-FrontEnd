@@ -1,3 +1,6 @@
+const
+    Freedom = require('./../utils/Freedom');
+
 const requestQueryHandler =
     ({
         query: parameters = {}
@@ -40,7 +43,16 @@ const requestParamsHandler =
 
         next();
     };
+
+const requestBodyHandler =
+    ({
+        body: body = {}
+    }, res, next) => {
+        res.locals.freedom = new Freedom(body);
+        next();
+    }
 module.exports = {
     requestQueryHandler,
-    requestHandler: [requestQueryHandler, requestParamsHandler]
+    requestHandler: [requestQueryHandler, requestParamsHandler],
+    requestBodyHandler
 };

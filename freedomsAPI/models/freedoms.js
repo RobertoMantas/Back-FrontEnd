@@ -65,7 +65,10 @@ const saveDB = async data => {
 };
 
 const deleteDB =
-    async data => {
+    async ({
+        data = {},
+        options = {}
+    }) => {
         try {
             const result = await freedomsCollection().deleteMany(data);
             console.log(`Remove OK: ${result.deletedCount}`);
@@ -89,14 +92,15 @@ const getDB =
     };
 
 const putDB =
-    async ({
-        data = {},
-        options = {}
-    }) => {
+    async (
+        selector = {},
+        data = {}
+    ) => {
         try {
-            const result = await freedomsCollection().find(data, options).toArray();
-            console.log(`GET OK: ${result.length}`);
-            return result;
+            const result = await freedomsCollection().updateOne(selector, {
+                $set: data
+            });
+            console.log(`PUT OK: ${result.result.nModified}`);
         } catch (error) {
             throw error.stack;
         }

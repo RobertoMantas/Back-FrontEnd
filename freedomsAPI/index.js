@@ -6,11 +6,11 @@ const {
   freedomsRouter
 } = require("./router");
 
-const indexF = async (app) => {
+const indexF = async (app, urlbase) => {
   try {
     await configBackend.configDB();
     await freedomsInitDB();
-    app.use("/freedoms", freedomsRouter);
+    app.use(`${urlbase}/freedoms`, freedomsRouter);
     console.log("Config FreedomsAPI module: OK ");
   } catch (error) {
     console.error("Config FreedomsAPI module: KO ");

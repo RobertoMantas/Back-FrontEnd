@@ -1,9 +1,10 @@
 const HttpStatus = require('http-status-codes');
-const ClientError = require("../utils/clientError");
+const ClientError = require("../utils/ClientError");
 
 const {
     query,
     param,
+    body,
     validationResult,
     oneOf
 } = require('express-validator/check');
@@ -20,7 +21,7 @@ const paginationValidate = [
     query('offset')
     .optional()
     .isInt({
-        min: 1
+        min: 0
     })
     .toInt()
 
@@ -68,10 +69,42 @@ const countryValidate = [
     .not()
     .isEmpty()
 ];
+
+const bodyValidate = [
+    body('year')
+    .isInt({
+        min: 1
+    })
+    .toInt(),
+
+    body('country')
+    .isString()
+    .trim(),
+
+    body('hScore')
+    .isDecimal({
+        min: 0.00,
+        max: 1.00
+    })
+    .toFloat(),
+
+    body('freedom')
+    .isDecimal({
+        min: 0.00,
+        max: 1.00
+    })
+    .toFloat(),
+
+    body('hRank')
+    .isInt({
+        min: 1
+    })
+    .toInt()
+];
 const validationHandler = (req, _res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        next(new ClientError("Validation KO", errors.array().map(err => err.msg), HttpStatus.BAD_REQUEST));
+        next(new ClientError("Validation KO", errors.array().map(err => `${err.param}: ${err.msg}`), HttpStatus.BAD_REQUEST));
     }
     next();
 };
@@ -80,5 +113,6 @@ module.exports = {
     commonValidators: [paginationValidate, fromToValidate],
     yearValidate,
     countryValidate,
-    validationHandler
+    validationHandler,
+    bodyValidate
 };
